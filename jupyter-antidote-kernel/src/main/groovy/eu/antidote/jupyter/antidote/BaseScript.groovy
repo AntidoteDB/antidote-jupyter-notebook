@@ -37,13 +37,28 @@ abstract class BaseScript extends Script {
         Collection.metaClass.filter = { delegate.grep it }
     }
 
-    GalaxyClient galaxy //= new GalaxyClient(AntidoteKernel.GALAXY_HOST, AntidoteKernel.GALAXY_KEY)
-
+    GalaxyClient galaxy //= new GalaxyClient(AntidoteKernel.ANTIDOTE_HOST, AntidoteKernel.GALAXY_KEY)
+    AntidoteService antidote;
     void init() {
         if (galaxy == null) {
-            galaxy = new GalaxyClient(AntidoteKernel.GALAXY_HOST, AntidoteKernel.GALAXY_KEY)
+            galaxy = new GalaxyClient(AntidoteKernel.ANTIDOTE_HOST, AntidoteKernel.GALAXY_KEY)
         }
+        antidote = new AntidoteService()
     }
+
+    String showString(String name){
+        return  "Hello thr "+ name
+    }
+
+    int numberMethod(int x, int y){
+        return x + y
+    }
+    //Test antidote client call
+    int doAntidoteTx(int x, int y, int z){
+        antidote = new AntidoteService()
+        return antidote.staticTransactionWithRead(x, y, z)
+    }
+
     File get(Integer hid) {
 //        if (galaxy == null) {
 //            println "Not connected to a Galaxy instance."

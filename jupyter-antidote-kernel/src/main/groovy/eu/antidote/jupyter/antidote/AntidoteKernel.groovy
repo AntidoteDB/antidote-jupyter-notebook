@@ -27,7 +27,9 @@ import org.lappsgrid.jupyter.groovy.GroovyKernel
  */
 @Slf4j('logger')
 class AntidoteKernel extends GroovyKernel {
-    public static String GALAXY_HOST = "http://localhost:8000"
+    public static String ANTIDOTE_HOST = "http://192.168.99.100:8087"
+    public static String ANTIDOTE_IP = "192.168.99.100"
+    public static int ANTIDOTE_PORT = 8087;
     public static String GALAXY_KEY = ""
 
     public AntidoteKernel() {
@@ -64,12 +66,12 @@ class AntidoteKernel extends GroovyKernel {
             System.exit(1)
         }
 
-        GALAXY_HOST = System.getenv("GALAXY_HOST")
-        if (GALAXY_HOST) {
-            logger.info "GALAXY_HOST is $GALAXY_HOST"
+        ANTIDOTE_HOST = System.getenv("ANTIDOTE_HOST")
+        if (ANTIDOTE_HOST) {
+            logger.info "ANTIDOTE_HOST is $ANTIDOTE_HOST"
         }
         else {
-            logger.warn "GALAXY_HOST not set.  You will not be able to communicate with a Galaxy instance."
+            logger.warn "ANTIDOTE_HOST not set.  You will not be able to communicate with a Galaxy instance."
         }
         GALAXY_KEY = System.getenv("GALAXY_KEY")
         if (GALAXY_KEY) {

@@ -110,13 +110,6 @@
             <artifactId>ivy</artifactId>
             <version>${ivy.version}</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.lappsgrid</groupId>
-            <artifactId>all</artifactId>
-            <version>${lapps.all.version}</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.lappsgrid</groupId>
             <artifactId>api</artifactId>
@@ -176,6 +169,13 @@
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-multipart</artifactId>
             <version>1.17.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/eu.antidotedb/antidote-java-client -->
+        <dependency>
+            <groupId>eu.antidotedb</groupId>
+            <artifactId>antidote-java-client</artifactId>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 </project>
