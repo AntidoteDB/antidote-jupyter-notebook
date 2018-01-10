@@ -79,8 +79,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <!--todo: copy kernel.jar to /kernel and /src/docker-->
                 <configuration>
-                    <finalName>${project.artifactId}-${project.version}</finalName>
+                    <finalName>${project.artifactId}</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
