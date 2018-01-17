@@ -23,6 +23,7 @@ import com.github.jmchilton.blend4j.galaxy.ToolsClient
 import com.github.jmchilton.blend4j.galaxy.beans.History
 import org.lappsgrid.serialization.Data
 import org.lappsgrid.serialization.Serializer
+import eu.antidote.*
 
 /**
  * Based on work of
@@ -38,7 +39,7 @@ abstract class BaseScript extends Script {
     }
 
     GalaxyClient galaxy //= new GalaxyClient(AntidoteKernel.ANTIDOTE_HOST, AntidoteKernel.GALAXY_KEY)
-    AntidoteService antidote;
+    AntidoteService antidote
     void init() {
         if (galaxy == null) {
             galaxy = new GalaxyClient(AntidoteKernel.ANTIDOTE_HOST, AntidoteKernel.GALAXY_KEY)
