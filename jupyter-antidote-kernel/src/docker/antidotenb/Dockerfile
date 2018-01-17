@@ -9,10 +9,13 @@ USER root
 RUN apt-get update && \
 	apt-get install -y openjdk-7-jdk
 
+# install docker
+RUN apt-get install -y docker.io
+
 # update jupyter notebook if any
 RUN pip install --upgrade pip
 RUN pip install --upgrade notebook
-
+ 
 # add Antidote kernel to jupyter notebook
 RUN mkdir -p /jupyter/antidote
 COPY ./jupyter-antidote-kernel.jar /jupyter/

@@ -1,7 +1,8 @@
 version: "3.3"
 services:
   antidote1:
-     image: mweber/antidotedb:latest
+     image: antidotedb/antidote:latest
+     container_name: antidote1
      ports:
        - "8087:8087"
      environment:
@@ -14,7 +15,8 @@ services:
        - local1
 
   antidote2:
-    image: mweber/antidotedb:latest
+    image: antidotedb/antidote:latest
+    container_name: antidote2
     ports:
       - "8088:8087"
     environment:
@@ -28,10 +30,13 @@ services:
 
   antidote-notebook:
     image: jirijira/antidotenb:latest
+    container_name: antidote_notebook
     ports:
       - "8089:8888"
     cap_add:
       - NET_ADMIN
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - local1
       - local2
