@@ -60,6 +60,24 @@ abstract class BaseScript extends Script {
         return antidote.staticTransactionWithRead(x, y, z)
     }
 
+    /**
+     * Execute the docker command to emulate network connection between antidote notes
+     * executed in Antidote1
+     */
+    String connectAntidotes(){
+        Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 0%")
+        return "Connecting Antidote nodes."
+    }
+
+    /**
+     * Execute the docker command to emulate network disconnection between antidote notes
+     * executed in Antidote1
+     */
+    String disconnectAntidotes(){
+        Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 100%")
+        return "Disconnecting Antidote nodes."
+    }
+
     File get(Integer hid) {
 //        if (galaxy == null) {
 //            println "Not connected to a Galaxy instance."
