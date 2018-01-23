@@ -21,6 +21,9 @@ import com.github.jmchilton.blend4j.galaxy.GalaxyInstance
 import com.github.jmchilton.blend4j.galaxy.HistoriesClient
 import com.github.jmchilton.blend4j.galaxy.ToolsClient
 import com.github.jmchilton.blend4j.galaxy.beans.History
+import eu.antidotedb.client.Bucket
+import eu.antidotedb.client.Key
+import eu.antidotedb.client.MapKey
 import org.lappsgrid.serialization.Data
 import org.lappsgrid.serialization.Serializer
 import eu.antidote.*
@@ -76,6 +79,15 @@ abstract class BaseScript extends Script {
     String disconnectAntidotes(){
         Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 100%")
         return "Disconnecting Antidote nodes."
+    }
+
+    String createBucket(String bucketName){
+        Bucket bucket = Bucket.bucket(bucketName)
+
+    }
+
+    String createAWMap(String mapId){
+        MapKey mapKey = Key.map_aw("")
     }
 
     File get(Integer hid) {
