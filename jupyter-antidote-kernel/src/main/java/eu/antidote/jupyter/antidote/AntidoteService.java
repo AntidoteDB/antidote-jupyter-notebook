@@ -66,6 +66,30 @@ public class AntidoteService {
         return sum;
     }
 
+    public String createAWMap(String mapId){
+        MapKey mapKey = Key.map_aw(mapId);
+        return mapKey.toString();
+    }
+
+    public String createRegister(String registerId){
+        RegisterKey<String> registerKey = Key.register(registerId);
+        return registerKey.toString();
+    }
+
+    public String registerInMap(String mapKeyId, String registerKeyId, String registerValue){
+        MapKey mapKey = Key.map_aw(mapKeyId);
+        RegisterKey<String> registerKey = Key.register(registerKeyId);
+        bucket.update(antidoteClient.noTransaction(), mapKey.update(registerKey.assign(registerValue)));
+        return mapKey.toString();
+    }
+
+    public String readRegisterInMap(String mapKeyId, String registerKeyId){
+        MapKey mapKey = Key.map_aw(mapKeyId);
+        RegisterKey<String> registerKey = Key.register(registerKeyId);
+        MapKey.MapReadResult mapReadResult = bucket.read(antidoteClient.noTransaction(), mapKey);
+        return mapReadResult.get(registerKey);
+    }
+
     public String nextSessionId() {
         return new BigInteger(130, random).toString(32);
     }

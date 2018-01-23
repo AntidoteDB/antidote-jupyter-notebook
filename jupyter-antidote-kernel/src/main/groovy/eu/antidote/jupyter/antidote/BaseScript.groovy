@@ -20,6 +20,7 @@ package eu.antidote.jupyter.antidote
 import eu.antidotedb.client.Bucket
 import eu.antidotedb.client.Key
 import eu.antidotedb.client.MapKey
+import eu.antidotedb.client.RegisterKey
 import org.lappsgrid.serialization.Data
 import org.lappsgrid.serialization.Serializer
 import eu.antidote.*
@@ -51,7 +52,6 @@ abstract class BaseScript extends Script {
     }
     //Test antidote client call
     int doAntidoteTx(int x, int y, int z){
-        antidote = new AntidoteService()
         return antidote.staticTransactionWithRead(x, y, z)
     }
 
@@ -79,7 +79,19 @@ abstract class BaseScript extends Script {
     }
 
     String createAWMap(String mapId){
-        MapKey mapKey = Key.map_aw("")
+      return antidote.createAWMap(mapId)
+    }
+
+    String createRegister(String registerId){
+        return antidote.createRegister(registerId)
+    }
+
+    String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
+        return antidote.registerInMap(mapKeyId, registerKeyId, registerValue)
+    }
+
+    String readRegisterInMap(String mapId, String registerKeyId){
+        return antidote.readRegisterInMap(mapId, registerKeyId)
     }
 
     String version() {
@@ -90,5 +102,10 @@ abstract class BaseScript extends Script {
 
     void exit() {
         System.exit(0)
+    }
+
+    String generateId() {
+        String uniqueID = UUID.randomUUID().toString()
+        return uniqueID
     }
 }
