@@ -8,7 +8,7 @@ RUN apt-get install -y docker.io
 RUN mkdir -p /jupyter/antidote
 COPY jupyter-antidote-kernel.jar /jupyter/jupyter-antidote-kernel.jar
 COPY kernel.json /jupyter/antidote/kernel.json
-RUN jupyter kernelspec install --name ANTIDOTE /jupyter/antidote
+RUN jupyter kernelspec install --name Antidote /jupyter/antidote
 
 COPY ["./Welcome to Antidote.ipynb", "./Welcome to Antidote.ipynb"]
 
