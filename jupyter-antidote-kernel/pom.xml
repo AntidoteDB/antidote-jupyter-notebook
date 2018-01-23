@@ -79,9 +79,9 @@
                         </goals>
                     </execution>
                 </executions>
-                <!--todo: copy kernel.jar to /kernel and /src/docker-->
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
+                    <outputDirectory>src/docker/antidotenb</outputDirectory>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>

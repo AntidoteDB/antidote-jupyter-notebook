@@ -1,0 +1,6 @@
+{
+  "argv": [ "java", "-jar", "C:/Users/samja/Documents/EMSE/2nd Year/1st Semester/Jupyter project/Groovy Antidote Kernel/jupyter-antidote-kernel/Kernel/jupyter-antidote-kernel-0.1.0-SNAPSHOT.jar", "{connection_file}" ],
+  "display_name": "Antidote",
+  "language": "groovy",
+  "env": { "PS1":"antidote>"}
+}
