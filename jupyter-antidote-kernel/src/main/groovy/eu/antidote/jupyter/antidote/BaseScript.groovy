@@ -82,10 +82,7 @@ abstract class BaseScript extends Script {
 
     }
 
-    String createAWMap(String mapId){
-      return antidote.createAWMap(mapId)
-    }
-
+    //-----------------LWREGISTER METHODS----------------------------//
     String updateLWRegister(String registerKey, String value){
         return antidote.getRegisterService().updateRegister(registerKey, value)
     }
@@ -96,6 +93,29 @@ abstract class BaseScript extends Script {
 
     void resetLWRegister(String registerKey){
         antidote.getRegisterService().resetRegister(registerKey)
+    }
+
+    //-------------------MVREGISTER----------------------------------//
+    String updateMVRegister(String registerKey, String value){
+        return antidote.getMvRegisterService().updateRegister(registerKey, value)
+    }
+
+    List<String> readMVRegister(String registerKey){
+        antidote.getMvRegisterService().readRegister(registerKey)
+        String a ="a"
+        String b = "b"
+        List<String> list = new ArrayList<>();
+        list.add(a)
+        list.add(b)
+        return list
+    }
+
+    void resetMVRegister(String registerKey){
+        antidote.getMvRegisterService().resetRegister(registerKey)
+    }
+
+    String createAWMap(String mapId){
+        return antidote.createAWMap(mapId)
     }
 
     String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){

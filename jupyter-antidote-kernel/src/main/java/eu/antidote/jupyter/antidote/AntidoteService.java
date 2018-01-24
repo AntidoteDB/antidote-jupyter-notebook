@@ -1,5 +1,6 @@
 package eu.antidote.jupyter.antidote;
 
+import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
 import eu.antidote.jupyter.antidote.crdt.RegisterService;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
@@ -18,6 +19,7 @@ public class AntidoteService {
     final String bucketKey;
     final SecureRandom random;
     private RegisterService registerService;
+    private MultiValueRegisterService mvRegisterService;
 
     public AntidoteService() {
 
@@ -123,4 +125,12 @@ public class AntidoteService {
         }
         return registerService;
     }
+
+    public MultiValueRegisterService getMvRegisterService() {
+        if(mvRegisterService == null){
+            mvRegisterService = new MultiValueRegisterService(this);
+        }
+        return mvRegisterService;
+    }
+
 }

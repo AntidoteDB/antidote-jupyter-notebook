@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Test for RegisterService
- * Make sure you have an AntidoteDB running on port 8087
+ *
  */
 public class RegisterServiceTest extends AbstractAntidoteTest{
 
