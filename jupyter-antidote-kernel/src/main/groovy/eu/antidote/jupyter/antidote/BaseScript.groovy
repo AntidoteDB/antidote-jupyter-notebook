@@ -17,6 +17,7 @@
 
 package eu.antidote.jupyter.antidote
 
+import eu.antidote.jupyter.antidote.crdt.RegisterService
 import eu.antidotedb.client.BatchRead
 import eu.antidotedb.client.BatchReadResult
 import eu.antidotedb.client.Bucket
@@ -86,7 +87,7 @@ abstract class BaseScript extends Script {
     }
 
     String updateRegister(String registerId, String value){
-        return antidote.updateRegister(registerId, value)
+        return antidote.getRegisterService().updateRegister(registerId, value);
     }
 
     String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){

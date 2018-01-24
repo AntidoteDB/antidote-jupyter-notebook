@@ -12,11 +12,12 @@ import java.util.List;
 
 public class AntidoteService {
 
-    final AntidoteClient antidoteClient;
+    final private AntidoteClient antidoteClient;
     final CountingTransformer messageCounter;
-    final Bucket bucket;
+    final private Bucket bucket;
     final String bucketKey;
     final SecureRandom random;
+    private RegisterService registerService;
 
     public AntidoteService() {
 
@@ -72,11 +73,6 @@ public class AntidoteService {
         return mapKey.toString();
     }
 
-    public String updateRegister(String registerId, String registerValue){
-        RegisterService registerService = new RegisterService(bucket, antidoteClient);
-        return registerService.updateRegister(registerId, registerValue);
-    }
-
     public String registerInMap(String mapKeyId, String registerKeyId, String registerValue){
         MapKey mapKey = Key.map_aw(mapKeyId);
         RegisterKey<String> registerKey = Key.register(registerKeyId);
@@ -113,4 +109,18 @@ public class AntidoteService {
         return i.get();
     }
 
+    public Bucket getBucket() {
+        return bucket;
+    }
+
+    public AntidoteClient getAntidoteClient() {
+        return antidoteClient;
+    }
+
+    public RegisterService getRegisterService(){
+        if(registerService == null){
+            registerService = new RegisterService(this);
+        }
+        return registerService;
+    }
 }
