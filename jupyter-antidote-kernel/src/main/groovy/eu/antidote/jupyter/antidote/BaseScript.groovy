@@ -122,11 +122,15 @@ abstract class BaseScript extends Script {
     }
 
     //IntegerKey
-    String newInteger(String integerId, Long value){
+    String newInteger(String integerId, Integer value){
         return antidote.getIntegerService().newInteger(integerId, value);
     }
 
-    String incrementInteger(String integerId, Long incrementValue){
+    String incrementInteger(String integerId, Integer incrementValue){
         return antidote.getIntegerService().newInteger(integerId, incrementValue);
+    }
+
+    String readInteger(String integerKey){
+        return antidote.getIntegerService().readInteger(integerKey);
     }
 }
