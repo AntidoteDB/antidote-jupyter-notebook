@@ -122,15 +122,37 @@ abstract class BaseScript extends Script {
     }
 
     //IntegerKey
-    String newInteger(String integerId, Integer value){
-        return antidote.getIntegerService().newInteger(integerId, value);
+    String assignInteger(String integerId, int value){
+        return antidote.getIntegerService().assignInteger(integerId, value);
     }
 
-    String incrementInteger(String integerId, Integer incrementValue){
-        return antidote.getIntegerService().newInteger(integerId, incrementValue);
+    String incrementInteger(String integerId, int incrementValue){
+        return antidote.getIntegerService().incrementInteger(integerId, incrementValue);
     }
 
     String readInteger(String integerKey){
         return antidote.getIntegerService().readInteger(integerKey);
+    }
+
+    //CounterKey
+    String incrementCounter(String counterKey, int incrementValue) {
+        return antidote.getCounterService().incrementCounter(counterKey, incrementValue);
+    }
+
+    String readCounter(String counterKey){
+        return antidote.getCounterService().readCounter(counterKey);
+    }
+
+    //FatCounterKey
+    String incrementFatCounter(String fatCounterKey, int incrementValue) {
+        return antidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
+    }
+
+    String resetFatCounter(String fatCounterKey) {
+        return antidote.getFatCounterService().resetFatCounter(fatCounterKey);
+    }
+
+    String readFatCounter(String fatCounterKey) {
+        return antidote.getFatCounterService().readFatCounter(fatCounterKey);
     }
 }
