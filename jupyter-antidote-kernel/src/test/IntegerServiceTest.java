@@ -16,22 +16,22 @@ public class IntegerServiceTest extends AbstractAntidoteTest{
     }
 
     @Test
-    public void testNewInteger(){
+    public void testAssignInteger(){
 
-        service.newInteger("key1", 1);
+        service.assignInteger("key1", 1);
 
         long readValue = service.readInteger("key1");
-        assertEquals(readValue, 1);
+        assertEquals(1, readValue);
     }
 
     @Test
     public void testIncrementIntger() {
 
-        service.newInteger("key2", 1);
+        service.assignInteger("key2", 1);
         service.incrementInteger("key2", 3);
 
         long readValue = service.readInteger("key2");
-        assertEquals(readValue, 4);
+        assertEquals(4, readValue);
     }
 
 }

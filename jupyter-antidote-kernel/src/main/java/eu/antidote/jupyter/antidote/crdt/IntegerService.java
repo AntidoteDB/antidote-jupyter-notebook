@@ -11,7 +11,7 @@ public class IntegerService {
         antidoteService = service;
     }
 
-    public String newInteger(String integerId, Integer integerValue){
+    public String assignInteger(String integerId, Integer integerValue){
         IntegerKey integerKey = Key.integer(integerId);
         antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), integerKey.assign(integerValue));
         return integerKey.toString();

@@ -1,5 +1,7 @@
 package eu.antidote.jupyter.antidote;
 
+import eu.antidote.jupyter.antidote.crdt.CounterService;
+import eu.antidote.jupyter.antidote.crdt.FatCounterService;
 import eu.antidote.jupyter.antidote.crdt.IntegerService;
 import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
 import eu.antidote.jupyter.antidote.crdt.RegisterService;
@@ -24,6 +26,8 @@ public class AntidoteService {
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
     private SetSetvice setSetvice;
+    private CounterService counterService;
+    private FatCounterService fatCounterService;
 
     public AntidoteService() {
 
@@ -123,6 +127,20 @@ public class AntidoteService {
              integerService = new IntegerService(this);
          }
          return integerService;
+    }
+
+    public CounterService getCounterService() {
+        if(counterService == null) {
+            counterService = new CounterService(this);
+        }
+        return counterService;
+    }
+
+    public FatCounterService getFatCounterService() {
+        if(fatCounterService == null) {
+            fatCounterService = new FatCounterService(this);
+        }
+        return fatCounterService;
     }
 
     public MultiValueRegisterService getMvRegisterService() {
