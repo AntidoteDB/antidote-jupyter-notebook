@@ -17,7 +17,16 @@
 
 package eu.antidote.jupyter.antidote
 
+import eu.antidotedb.client.BatchRead
+import eu.antidotedb.client.BatchReadResult
 import eu.antidotedb.client.Bucket
+import eu.antidotedb.client.IntegerKey
+import eu.antidotedb.client.Key
+import eu.antidotedb.client.MapKey
+import eu.antidotedb.client.RegisterKey
+import org.lappsgrid.serialization.Data
+import org.lappsgrid.serialization.Serializer
+import eu.antidote.*
 
 /**
  * Based on work of
@@ -101,5 +110,21 @@ abstract class BaseScript extends Script {
     String generateId() {
         String uniqueID = UUID.randomUUID().toString()
         return uniqueID
+    }
+
+    //IntegerKey
+    int newInteger(String key) {
+        IntegerKey i = Key.integer(key);
+        return readInteger(key);
+    }
+
+    int incrementInteger(String key, int value) {
+        antidote.commitStaticUpdateTransaction(i.increment(value));
+        //need to call a read method to show the initial value of the integer.
+        return readInteger(key);
+    }
+
+    int readInteger(String key) {
+        return antidote.read(key);
     }
 }

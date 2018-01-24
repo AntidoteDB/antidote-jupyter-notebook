@@ -100,4 +100,17 @@ public class AntidoteService {
     public String nextSessionId() {
         return new BigInteger(130, random).toString(32);
     }
+
+    public void commitStaticUpdateTransaction(UpdateOp operation) {
+        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
+        bucket.update(tx, operation);
+        tx.commitTransaction();
+    }
+
+    public int read(Key key) {
+        BatchRead batchRead = antidoteClient.newBatchRead();
+        BatchReadResult<Integer> i = bucket.read(batchRead, key);
+        return i.get();
+    }
+
 }
