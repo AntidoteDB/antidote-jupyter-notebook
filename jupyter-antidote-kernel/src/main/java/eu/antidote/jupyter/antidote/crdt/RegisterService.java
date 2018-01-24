@@ -12,7 +12,7 @@ public class RegisterService{
         antidoteService = service;
     }
 
-    public String updateRegister(String registerKeyId, String registerValue){
+    public String assignRegister(String registerKeyId, String registerValue){
         RegisterKey<String> registerKey = Key.register(registerKeyId);
         antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.assign(registerValue));
         return registerKey.toString();

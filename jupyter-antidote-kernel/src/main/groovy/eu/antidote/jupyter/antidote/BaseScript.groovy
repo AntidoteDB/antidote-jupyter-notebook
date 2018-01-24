@@ -17,17 +17,7 @@
 
 package eu.antidote.jupyter.antidote
 
-import eu.antidote.jupyter.antidote.crdt.RegisterService
-import eu.antidotedb.client.BatchRead
-import eu.antidotedb.client.BatchReadResult
 import eu.antidotedb.client.Bucket
-import eu.antidotedb.client.IntegerKey
-import eu.antidotedb.client.Key
-import eu.antidotedb.client.MapKey
-import eu.antidotedb.client.RegisterKey
-import org.lappsgrid.serialization.Data
-import org.lappsgrid.serialization.Serializer
-import eu.antidote.*
 
 /**
  * Based on work of
@@ -83,8 +73,8 @@ abstract class BaseScript extends Script {
     }
 
     //-----------------LWREGISTER METHODS----------------------------//
-    String updateLWRegister(String registerKey, String value){
-        return antidote.getRegisterService().updateRegister(registerKey, value)
+    String assignLWRegister(String registerKey, String value){
+        return antidote.getRegisterService().assignRegister(registerKey, value)
     }
 
     String readLWRegister(String registerKey){
@@ -96,23 +86,31 @@ abstract class BaseScript extends Script {
     }
 
     //-------------------MVREGISTER----------------------------------//
-    String updateMVRegister(String registerKey, String value){
-        return antidote.getMvRegisterService().updateRegister(registerKey, value)
+    String assignMVRegister(String registerKey, String value){
+        return antidote.getMvRegisterService().AssignRegister(registerKey, value)
     }
 
     List<String> readMVRegister(String registerKey){
-        antidote.getMvRegisterService().readRegister(registerKey)
-        String a ="a"
-        String b = "b"
-        List<String> list = new ArrayList<>();
-        list.add(a)
-        list.add(b)
-        return list
+        return antidote.getMvRegisterService().readRegister(registerKey)
     }
 
     void resetMVRegister(String registerKey){
         antidote.getMvRegisterService().resetRegister(registerKey)
     }
+
+    //-----------------SET------------------------------------------//
+    void addToSet(String setKey, String... values){
+        antidote.getSetSetvice().addToSet(setKey, values)
+    }
+
+    void removeFromSet(String setKey, String... values){
+        antidote.getSetSetvice().removeFromSet(setKey, values)
+    }
+
+    List<String> readSet(String setKey){
+        return antidote.getSetSetvice().readSet(setKey)
+    }
+
 
     String createAWMap(String mapId){
         return antidote.createAWMap(mapId)

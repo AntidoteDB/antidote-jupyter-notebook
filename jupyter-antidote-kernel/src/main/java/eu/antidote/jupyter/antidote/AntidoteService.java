@@ -3,6 +3,7 @@ package eu.antidote.jupyter.antidote;
 import eu.antidote.jupyter.antidote.crdt.IntegerService;
 import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
 import eu.antidote.jupyter.antidote.crdt.RegisterService;
+import eu.antidote.jupyter.antidote.crdt.SetSetvice;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
@@ -22,6 +23,7 @@ public class AntidoteService {
     private RegisterService registerService;
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
+    private SetSetvice setSetvice;
 
     public AntidoteService() {
 
@@ -130,4 +132,10 @@ public class AntidoteService {
         return mvRegisterService;
     }
 
+    public SetSetvice getSetSetvice() {
+        if(setSetvice == null){
+            setSetvice = new SetSetvice(this);
+        }
+        return setSetvice;
+    }
 }

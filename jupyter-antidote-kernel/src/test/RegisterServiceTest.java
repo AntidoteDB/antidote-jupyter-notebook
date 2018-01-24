@@ -1,4 +1,3 @@
-import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidote.jupyter.antidote.crdt.RegisterService;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -17,7 +16,7 @@ public class RegisterServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testUpdateRegister(){
-        service.updateRegister("key1", "testValue");
+        service.assignRegister("key1", "testValue");
 
         String readValue = service.readRegister("key1");
         assertEquals(readValue, "testValue");

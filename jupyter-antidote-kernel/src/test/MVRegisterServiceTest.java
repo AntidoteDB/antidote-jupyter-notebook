@@ -1,5 +1,4 @@
 import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
-import eu.antidote.jupyter.antidote.crdt.RegisterService;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class MVRegisterServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testUpdateRegister(){
-        service.updateRegister("key1", "testValue");
+        service.AssignRegister("key1", "testValue");
 
         List<String> readValue = service.readRegister("key1");
         assertEquals(readValue.get(0), "testValue");
@@ -24,8 +23,8 @@ public class MVRegisterServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testUpdateMultiValue(){
-        service.updateRegister("key2", "testValue1");
-        service.updateRegister("key2", "testValue2");
+        service.AssignRegister("key2", "testValue1");
+        service.AssignRegister("key2", "testValue2");
 
         List<String> readValues = service.readRegister("key2");
         assertEquals(2, readValues.size());

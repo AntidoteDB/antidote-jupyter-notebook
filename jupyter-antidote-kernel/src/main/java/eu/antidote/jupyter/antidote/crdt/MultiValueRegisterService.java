@@ -15,7 +15,7 @@ public class MultiValueRegisterService {
         antidoteService = service;
     }
 
-    public String updateRegister(String registerKeyId, String registerValue){
+    public String AssignRegister(String registerKeyId, String registerValue){
         MVRegisterKey<String> registerKey = Key.multiValueRegister(registerKeyId);
         antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.assign(registerValue));
         return registerKey.toString();
