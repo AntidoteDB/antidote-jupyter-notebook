@@ -1,5 +1,6 @@
 package eu.antidote.jupyter.antidote;
 
+import eu.antidote.jupyter.antidote.crdt.RegisterService;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
@@ -71,9 +72,9 @@ public class AntidoteService {
         return mapKey.toString();
     }
 
-    public String createRegister(String registerId){
-        RegisterKey<String> registerKey = Key.register(registerId);
-        return registerKey.toString();
+    public String updateRegister(String registerId, String registerValue){
+        RegisterService registerService = new RegisterService(bucket, antidoteClient);
+        return registerService.updateRegister(registerId, registerValue);
     }
 
     public String registerInMap(String mapKeyId, String registerKeyId, String registerValue){
@@ -88,6 +89,12 @@ public class AntidoteService {
         RegisterKey<String> registerKey = Key.register(registerKeyId);
         MapKey.MapReadResult mapReadResult = bucket.read(antidoteClient.noTransaction(), mapKey);
         return mapReadResult.get(registerKey);
+    }
+
+    public String createMultiValueRegister(String registerKeyId, String registerValue){
+        MVRegisterKey<String> mvRegisterKey = Key.multiValueRegister(registerKeyId);
+        bucket.update(antidoteClient.noTransaction(), mvRegisterKey.assign(registerValue));
+        return registerKeyId;
     }
 
     public String nextSessionId() {

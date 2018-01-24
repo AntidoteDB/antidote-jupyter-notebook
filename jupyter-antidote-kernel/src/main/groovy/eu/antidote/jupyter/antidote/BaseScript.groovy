@@ -18,12 +18,6 @@
 package eu.antidote.jupyter.antidote
 
 import eu.antidotedb.client.Bucket
-import eu.antidotedb.client.Key
-import eu.antidotedb.client.MapKey
-import eu.antidotedb.client.RegisterKey
-import org.lappsgrid.serialization.Data
-import org.lappsgrid.serialization.Serializer
-import eu.antidote.*
 
 /**
  * Based on work of
@@ -38,7 +32,7 @@ abstract class BaseScript extends Script {
         Collection.metaClass.filter = { delegate.grep it }
     }
 
-    AntidoteService antidote
+    static AntidoteService antidote
     void init() {
         antidote = new AntidoteService()
     }
@@ -82,8 +76,8 @@ abstract class BaseScript extends Script {
       return antidote.createAWMap(mapId)
     }
 
-    String createRegister(String registerId){
-        return antidote.createRegister(registerId)
+    String updateRegister(String registerId, String value){
+        return antidote.updateRegister(registerId, value)
     }
 
     String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
