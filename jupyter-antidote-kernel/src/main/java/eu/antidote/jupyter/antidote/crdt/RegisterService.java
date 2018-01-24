@@ -1,8 +1,6 @@
 package eu.antidote.jupyter.antidote.crdt;
 
 import eu.antidote.jupyter.antidote.AntidoteService;
-import eu.antidotedb.client.AntidoteClient;
-import eu.antidotedb.client.Bucket;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.RegisterKey;
 
@@ -14,10 +12,20 @@ public class RegisterService{
         antidoteService = service;
     }
 
-    public String updateRegister(String registerId, String registerValue){
-        RegisterKey<String> registerKey = Key.register(registerId);
+    public String updateRegister(String registerKeyId, String registerValue){
+        RegisterKey<String> registerKey = Key.register(registerKeyId);
         antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.assign(registerValue));
         return registerKey.toString();
+    }
+
+    public String readRegister(String registerKeyId){
+        RegisterKey<String> registerKey = Key.register(registerKeyId);
+        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), registerKey);
+    }
+
+    public void resetRegister(String registerKeyId){
+        RegisterKey<String> registerKey = Key.register(registerKeyId);
+        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.reset());
     }
 
 }

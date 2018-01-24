@@ -86,8 +86,16 @@ abstract class BaseScript extends Script {
       return antidote.createAWMap(mapId)
     }
 
-    String updateRegister(String registerId, String value){
-        return antidote.getRegisterService().updateRegister(registerId, value);
+    String updateLWRegister(String registerKey, String value){
+        return antidote.getRegisterService().updateRegister(registerKey, value)
+    }
+
+    String readLWRegister(String registerKey){
+        return antidote.getRegisterService().readRegister(registerKey)
+    }
+
+    void resetLWRegister(String registerKey){
+        antidote.getRegisterService().resetRegister(registerKey)
     }
 
     String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
