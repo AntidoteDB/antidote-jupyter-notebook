@@ -114,18 +114,11 @@ abstract class BaseScript extends Script {
     }
 
     //IntegerKey
-    int newInteger(String key) {
-        IntegerKey i = Key.integer(key);
-        return readInteger(key);
+    String newInteger(String integerId, Long value){
+        return antidote.getIntegerService().newInteger(integerId, value);
     }
 
-    int incrementInteger(String key, int value) {
-        antidote.commitStaticUpdateTransaction(i.increment(value));
-        //need to call a read method to show the initial value of the integer.
-        return readInteger(key);
-    }
-
-    int readInteger(String key) {
-        return antidote.read(key);
+    String incrementInteger(String integerId, Long incrementValue){
+        return antidote.getIntegerService().newInteger(integerId, incrementValue);
     }
 }

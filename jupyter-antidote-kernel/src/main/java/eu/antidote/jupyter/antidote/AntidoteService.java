@@ -1,5 +1,6 @@
 package eu.antidote.jupyter.antidote;
 
+import eu.antidote.jupyter.antidote.crdt.IntegerService;
 import eu.antidote.jupyter.antidote.crdt.RegisterService;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
@@ -18,6 +19,7 @@ public class AntidoteService {
     final String bucketKey;
     final SecureRandom random;
     private RegisterService registerService;
+    private IntegerService integerService;
 
     public AntidoteService() {
 
@@ -97,18 +99,6 @@ public class AntidoteService {
         return new BigInteger(130, random).toString(32);
     }
 
-    public void commitStaticUpdateTransaction(UpdateOp operation) {
-        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
-        bucket.update(tx, operation);
-        tx.commitTransaction();
-    }
-
-    public int read(Key key) {
-        BatchRead batchRead = antidoteClient.newBatchRead();
-        BatchReadResult<Integer> i = bucket.read(batchRead, key);
-        return i.get();
-    }
-
     public Bucket getBucket() {
         return bucket;
     }
@@ -122,5 +112,12 @@ public class AntidoteService {
             registerService = new RegisterService(this);
         }
         return registerService;
+    }
+
+    public IntegerService getIntegerService() {
+         if(integerService == null) {
+             integerService = new IntegerService(this);
+         }
+         return integerService;
     }
 }
