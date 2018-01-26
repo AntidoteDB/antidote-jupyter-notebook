@@ -15,18 +15,12 @@ public class RegisterService{
 
     public UpdateOp assignRegister(String registerKeyId, String registerValue){
         RegisterKey<String> registerKey = Key.register(registerKeyId);
-        //antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.assign(registerValue));
         return registerKey.assign(registerValue);
     }
 
     public String readRegister(String registerKeyId){
         RegisterKey<String> registerKey = Key.register(registerKeyId);
         return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), registerKey);
-    }
-
-    public void resetRegister(String registerKeyId){
-        RegisterKey<String> registerKey = Key.register(registerKeyId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.reset());
     }
 
 }
