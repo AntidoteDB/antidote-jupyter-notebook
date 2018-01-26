@@ -32,7 +32,7 @@ public class AntidoteService {
         List<TransformerFactory> transformers = new ArrayList();
         transformers.add(messageCounter = new CountingTransformer());
         AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
-        this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getConfigHosts());
+        this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
         this.random = new SecureRandom();
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);

@@ -29,8 +29,8 @@ import org.lappsgrid.jupyter.groovy.GroovyKernel
 class AntidoteKernel extends GroovyKernel {
     public static String ANTIDOTE_HOST = "http://192.168.99.100:8087"
     public static String ANTIDOTE_IP = "192.168.99.100"
-    public static int ANTIDOTE_PORT = 8087;
-    public static String GALAXY_KEY = ""
+    public static int ANTIDOTE1_PORT = 8087;
+    public static int ANTIDOTE2_PORT = 8088;
 
     public AntidoteKernel() {
         super(new AntidoteContext())
@@ -64,21 +64,6 @@ class AntidoteKernel extends GroovyKernel {
         if (!config.exists()) {
             logger.error "Kernel configuration not found."
             System.exit(1)
-        }
-
-        ANTIDOTE_HOST = System.getenv("ANTIDOTE_HOST")
-        if (ANTIDOTE_HOST) {
-            logger.info "ANTIDOTE_HOST is $ANTIDOTE_HOST"
-        }
-        else {
-            logger.warn "ANTIDOTE_HOST not set.  You will not be able to communicate with a Galaxy instance."
-        }
-        GALAXY_KEY = System.getenv("GALAXY_KEY")
-        if (GALAXY_KEY) {
-            logger.info("GALAXY_KEY is {}", GALAXY_KEY)
-        }
-        else {
-            logger.warn "GALAXY_KEY not set.  You will not be able to communicate with a Galaxy instance."
         }
 
         GroovyKernel kernel = new AntidoteKernel()
