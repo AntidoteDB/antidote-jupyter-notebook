@@ -1,4 +1,6 @@
 import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
+import eu.antidotedb.client.UpdateOp;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,12 +17,13 @@ public class MVRegisterServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testUpdateRegister(){
-        service.AssignRegister("key1", "testValue");
-
+        UpdateOp update = service.AssignRegister("key1", "testValue");
+        antidoteService.applyUpdate(update);
         List<String> readValue = service.readRegister("key1");
         assertEquals(readValue.get(0), "testValue");
     }
 
+    @Ignore("Needs to be done with concurrent databases")
     @Test
     public void testUpdateMultiValue(){
         service.AssignRegister("key2", "testValue1");

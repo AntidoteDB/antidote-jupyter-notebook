@@ -4,6 +4,7 @@ import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.MVRegisterKey;
 import eu.antidotedb.client.RegisterKey;
+import eu.antidotedb.client.UpdateOp;
 
 import java.util.List;
 
@@ -15,10 +16,9 @@ public class MultiValueRegisterService {
         antidoteService = service;
     }
 
-    public String AssignRegister(String registerKeyId, String registerValue){
+    public UpdateOp AssignRegister(String registerKeyId, String registerValue){
         MVRegisterKey<String> registerKey = Key.multiValueRegister(registerKeyId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.assign(registerValue));
-        return registerKey.toString();
+        return registerKey.assign(registerValue);
     }
 
     public List<String> readRegister(String registerKeyId){
@@ -26,8 +26,4 @@ public class MultiValueRegisterService {
         return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), registerKey);
     }
 
-    public void resetRegister(String registerKeyId){
-        RegisterKey<String> registerKey = Key.register(registerKeyId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), registerKey.reset());
-    }
 }
