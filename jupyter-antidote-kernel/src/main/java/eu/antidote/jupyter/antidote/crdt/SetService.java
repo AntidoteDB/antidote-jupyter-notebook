@@ -2,7 +2,6 @@ package eu.antidote.jupyter.antidote.crdt;
 
 import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.Key;
-import eu.antidotedb.client.RegisterKey;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class SetService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public SetService(AntidoteService service) {
         antidoteService = service;

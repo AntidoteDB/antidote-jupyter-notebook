@@ -7,7 +7,7 @@ import eu.antidotedb.client.UpdateOp;
 
 public class CounterService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public CounterService(AntidoteService service){
         antidoteService = service;
@@ -20,7 +20,7 @@ public class CounterService {
 
     public int readCounter(String counterId){
         CounterKey counterKey = Key.counter(counterId);
-        return (Integer) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), counterKey);
+        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), counterKey);
     }
 
 }

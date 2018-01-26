@@ -7,7 +7,7 @@ import eu.antidotedb.client.UpdateOp;
 
 public class FatCounterService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public FatCounterService(AntidoteService service){
         antidoteService = service;
@@ -25,6 +25,6 @@ public class FatCounterService {
 
     public int readFatCounter(String fatCounterId){
         CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
-        return (Integer) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
+        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
     }
 }
