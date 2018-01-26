@@ -173,4 +173,13 @@ abstract class BaseScript extends Script {
     String readFatCounter(String fatCounterKey) {
         return antidote.getFatCounterService().readFatCounter(fatCounterKey);
     }
+
+    //Map_aw key
+    String readMapAW(String mapKey) {
+        return antidote.getMapAWService().readMapAW(mapKey);
+    }
+
+    /*void updateMapAW(String mapKey, String elementKey) {
+        return antidote
+    }*/
 }

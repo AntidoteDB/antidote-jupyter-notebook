@@ -11,20 +11,18 @@ public class IntegerService {
         antidoteService = service;
     }
 
-    public String assignInteger(String integerId, Integer integerValue){
+    public UpdateOp assignInteger(String integerId, Integer integerValue){
         IntegerKey integerKey = Key.integer(integerId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), integerKey.assign(integerValue));
-        return integerKey.toString();
+        return integerKey.assign(integerValue);
     }
 
-    public String incrementInteger(String integerId, Integer incrementValue) {
+    public UpdateOp incrementInteger(String integerId, Integer incrementValue) {
         IntegerKey integerKey = Key.integer(integerId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), integerKey.increment(incrementValue));
-        return integerKey.toString();
+        return integerKey.increment(incrementValue);
     }
 
     public long readInteger(String integerId){
-        IntegerKey integterKey = Key.integer(integerId);
-        return (Long) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), integterKey);
+        IntegerKey integerKey = Key.integer(integerId);
+        return (Long) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), integerKey);
     }
 }
