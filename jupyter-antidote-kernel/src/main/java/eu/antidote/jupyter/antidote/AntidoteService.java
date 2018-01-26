@@ -1,11 +1,6 @@
 package eu.antidote.jupyter.antidote;
 
-import eu.antidote.jupyter.antidote.crdt.CounterService;
-import eu.antidote.jupyter.antidote.crdt.FatCounterService;
-import eu.antidote.jupyter.antidote.crdt.IntegerService;
-import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
-import eu.antidote.jupyter.antidote.crdt.RegisterService;
-import eu.antidote.jupyter.antidote.crdt.SetSetvice;
+import eu.antidote.jupyter.antidote.crdt.*;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
@@ -25,9 +20,11 @@ public class AntidoteService {
     private RegisterService registerService;
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
-    private SetSetvice setSetvice;
+    private SetService setService;
+    private SetRWService rwSetService;
     private CounterService counterService;
     private FatCounterService fatCounterService;
+    private InteractiveTransaction tx;
 
     public AntidoteService() {
 
@@ -103,6 +100,22 @@ public class AntidoteService {
         return registerKeyId;
     }
 
+    public InteractiveTransaction startTransaction(){
+        return antidoteClient.startTransaction();
+    }
+
+    public void addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
+        bucket.update(tx, updateOp);
+    }
+
+    public void commitTransaction(InteractiveTransaction tx){
+            tx.commitTransaction();
+    }
+
+    public void applyUpdate(UpdateOp update){
+        bucket.update(antidoteClient.noTransaction(), update);
+    }
+
     public String nextSessionId() {
         return new BigInteger(130, random).toString(32);
     }
@@ -150,10 +163,17 @@ public class AntidoteService {
         return mvRegisterService;
     }
 
-    public SetSetvice getSetSetvice() {
-        if(setSetvice == null){
-            setSetvice = new SetSetvice(this);
+    public SetService getSetService() {
+        if(setService == null){
+            setService = new SetService(this);
         }
-        return setSetvice;
+        return setService;
+    }
+
+    public SetRWService getRwSetService() {
+        if(rwSetService == null){
+            rwSetService = new SetRWService(this);
+        }
+        return rwSetService;
     }
 }

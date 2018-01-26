@@ -17,7 +17,10 @@
 
 package eu.antidote.jupyter.antidote
 
+import eu.antidotedb.client.AntidoteTransaction
 import eu.antidotedb.client.Bucket
+import eu.antidotedb.client.InteractiveTransaction
+import eu.antidotedb.client.UpdateOp
 
 /**
  * Based on work of
@@ -72,8 +75,28 @@ abstract class BaseScript extends Script {
 
     }
 
+    AntidoteTransaction startTransaction(){
+        return antidote.startTransaction()
+    }
+
+    void addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
+        antidote.addToTransaction(tx, updateOp)
+    }
+
+    void commitTransaction(InteractiveTransaction tx){
+        antidote.commitTransaction(tx)
+    }
+
+    void applyUpdate(UpdateOp updateOperation){
+        antidote.applyUpdate(updateOperation)
+    }
+
+    void applyUpdates(List<UpdateOp> updateOperations){
+        antidote.applyUpdates(updateOperation)
+    }
+
     //-----------------LWREGISTER METHODS----------------------------//
-    String assignLWRegister(String registerKey, String value){
+    UpdateOp assignLWRegister(String registerKey, String value){
         return antidote.getRegisterService().assignRegister(registerKey, value)
     }
 
@@ -99,16 +122,29 @@ abstract class BaseScript extends Script {
     }
 
     //-----------------SET------------------------------------------//
-    void addToSet(String setKey, String... values){
-        antidote.getSetSetvice().addToSet(setKey, values)
+    UpdateOp addToSet(String setKey, String... values){
+       return antidote.getSetService().addToSet(setKey, values)
     }
 
     void removeFromSet(String setKey, String... values){
-        antidote.getSetSetvice().removeFromSet(setKey, values)
+        antidote.getSetService().removeFromSet(setKey, values)
     }
 
     List<String> readSet(String setKey){
-        return antidote.getSetSetvice().readSet(setKey)
+        return antidote.getSetService().readSet(setKey)
+    }
+
+    //-----------------RWSET------------------------------------------//
+    void addToRWSet(String setKey, String... values){
+        antidote.getRwSetService().addToRWSet(setKey, values)
+    }
+
+    void removeFromRWSet(String setKey, String... values){
+        antidote.getRwSetService().removeFromRWSet(setKey, values)
+    }
+
+    List<String> readRWSet(String setKey){
+        return antidote.getRwSetService().readRWSet(setKey)
     }
 
 
@@ -122,21 +158,6 @@ abstract class BaseScript extends Script {
 
     String readRegisterInMap(String mapId, String registerKeyId){
         return antidote.readRegisterInMap(mapId, registerKeyId)
-    }
-
-    String version() {
-        String groovy = eu.antidote.jupyter.groovy.Version.getVersion()
-        String antidote =  Version.getVersion()
-        sprintf("Kernel Versions\nGroovy : %s\nANTIDOTE    : %s", groovy, antidote)
-    }
-
-    void exit() {
-        System.exit(0)
-    }
-
-    String generateId() {
-        String uniqueID = UUID.randomUUID().toString()
-        return uniqueID
     }
 
     //IntegerKey
@@ -173,4 +194,20 @@ abstract class BaseScript extends Script {
     String readFatCounter(String fatCounterKey) {
         return antidote.getFatCounterService().readFatCounter(fatCounterKey);
     }
+
+    String version() {
+        String groovy = eu.antidote.jupyter.groovy.Version.getVersion()
+        String antidote =  Version.getVersion()
+        sprintf("Kernel Versions\nGroovy : %s\nANTIDOTE    : %s", groovy, antidote)
+    }
+
+    void exit() {
+        System.exit(0)
+    }
+
+    String generateId() {
+        String uniqueID = UUID.randomUUID().toString()
+        return uniqueID
+    }
+
 }
