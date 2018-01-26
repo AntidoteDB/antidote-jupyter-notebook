@@ -1,4 +1,3 @@
-import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidote.jupyter.antidote.crdt.CounterService;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -9,17 +8,17 @@ import static org.junit.Assert.assertEquals;
  */
 public class CounterServiceTest extends AbstractAntidoteTest{
 
-    CounterService service;
+    private CounterService service;
     public CounterServiceTest(){
         super();
         service = new CounterService(antidoteService);
     }
 
     @Test
-    public void testIncrementIntger() {
+    public void testIncrementInteger() {
 
-        service.incrementCounter("key1", 1);
-        service.incrementCounter("key1", 2);
+        antidoteService.applyUpdate(service.incrementCounter("key1", 1));
+        antidoteService.applyUpdate(service.incrementCounter("key1", 2));
 
         int readValue = service.readCounter("key1");
         assertEquals(3, readValue);

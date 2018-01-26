@@ -18,13 +18,13 @@ public class FatCounterService {
         return fatCounterKey.increment(incrementValue);
     }
 
-    public int readFatCounter(String fatCounterId){
-        CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
-        return (Integer) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
-    }
-
     public UpdateOp resetFatCounter(String fatCounterId){
         CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
         return fatCounterKey.reset();
+    }
+
+    public int readFatCounter(String fatCounterId){
+        CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
+        return (Integer) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
     }
 }
