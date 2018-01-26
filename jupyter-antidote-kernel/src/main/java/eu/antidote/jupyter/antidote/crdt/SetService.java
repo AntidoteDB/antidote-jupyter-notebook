@@ -20,10 +20,8 @@ public class SetService {
         SetKey<String> setKey = Key.set(setKeyId);
         UpdateOp updateOp;
         if(values.length>1) {
-           // antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.addAll(values));
             updateOp = setKey.addAll(values);
         }else{
-            //antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.add(values[0]));
             updateOp = setKey.add(values[0]);
         }
         return updateOp;
@@ -34,13 +32,15 @@ public class SetService {
         return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), setKey);
     }
 
-    public void removeFromSet(String setKeyId, String... values){
+    public UpdateOp removeFromSet(String setKeyId, String... values){
         SetKey<String> setKey = Key.set(setKeyId);
+        UpdateOp setUpdate;
         if(values.length>1) {
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.removeAll(values));
+            setUpdate = setKey.removeAll(values);
         }else{
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.remove(values[0]));
+            setUpdate = setKey.remove(values[0]);
         }
+        return setUpdate;
     }
 
 }

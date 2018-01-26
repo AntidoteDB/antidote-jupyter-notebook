@@ -91,10 +91,6 @@ abstract class BaseScript extends Script {
         antidote.applyUpdate(updateOperation)
     }
 
-    void applyUpdates(List<UpdateOp> updateOperations){
-        antidote.applyUpdates(updateOperation)
-    }
-
     //-----------------LWREGISTER METHODS----------------------------//
     UpdateOp assignLWRegister(String registerKey, String value){
         return antidote.getRegisterService().assignRegister(registerKey, value)
@@ -104,12 +100,9 @@ abstract class BaseScript extends Script {
         return antidote.getRegisterService().readRegister(registerKey)
     }
 
-    void resetLWRegister(String registerKey){
-        antidote.getRegisterService().resetRegister(registerKey)
-    }
 
     //-------------------MVREGISTER----------------------------------//
-    String assignMVRegister(String registerKey, String value){
+    UpdateOp assignMVRegister(String registerKey, String value){
         return antidote.getMvRegisterService().AssignRegister(registerKey, value)
     }
 
@@ -117,17 +110,13 @@ abstract class BaseScript extends Script {
         return antidote.getMvRegisterService().readRegister(registerKey)
     }
 
-    void resetMVRegister(String registerKey){
-        antidote.getMvRegisterService().resetRegister(registerKey)
-    }
-
     //-----------------SET------------------------------------------//
     UpdateOp addToSet(String setKey, String... values){
        return antidote.getSetService().addToSet(setKey, values)
     }
 
-    void removeFromSet(String setKey, String... values){
-        antidote.getSetService().removeFromSet(setKey, values)
+    UpdateOp removeFromSet(String setKey, String... values){
+        return antidote.getSetService().removeFromSet(setKey, values)
     }
 
     List<String> readSet(String setKey){
