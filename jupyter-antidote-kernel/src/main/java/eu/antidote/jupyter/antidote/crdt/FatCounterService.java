@@ -3,6 +3,7 @@ package eu.antidote.jupyter.antidote.crdt;
 import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.CounterKey;
 import eu.antidotedb.client.Key;
+import eu.antidotedb.client.UpdateOp;
 
 public class FatCounterService {
 
@@ -12,10 +13,9 @@ public class FatCounterService {
         antidoteService = service;
     }
 
-    public String incrementFatCounter(String fatCounterId, Integer incrementValue) {
+    public UpdateOp incrementFatCounter(String fatCounterId, Integer incrementValue) {
         CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey.increment(incrementValue));
-        return fatCounterKey.toString();
+        return fatCounterKey.increment(incrementValue);
     }
 
     public int readFatCounter(String fatCounterId){
@@ -23,8 +23,8 @@ public class FatCounterService {
         return (Integer) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
     }
 
-    public void resetFatCounter(String fatCounterId){
+    public UpdateOp resetFatCounter(String fatCounterId){
         CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
-        antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey.reset());
+        return fatCounterKey.reset();
     }
 }

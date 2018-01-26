@@ -210,4 +210,13 @@ abstract class BaseScript extends Script {
         return uniqueID
     }
 
+
+    //Map_aw key
+    String readMapAW(String mapKey) {
+        return antidote.getMapAWService().readMapAW(mapKey);
+    }
+
+    /*void updateMapAW(String mapKey, String elementKey) {
+        return antidote
+    }*/
 }

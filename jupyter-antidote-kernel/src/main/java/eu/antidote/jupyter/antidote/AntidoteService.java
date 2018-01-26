@@ -1,6 +1,11 @@
 package eu.antidote.jupyter.antidote;
 
-import eu.antidote.jupyter.antidote.crdt.*;
+import eu.antidote.jupyter.antidote.crdt.CounterService;
+import eu.antidote.jupyter.antidote.crdt.FatCounterService;
+import eu.antidote.jupyter.antidote.crdt.IntegerService;
+import eu.antidote.jupyter.antidote.crdt.MultiValueRegisterService;
+import eu.antidote.jupyter.antidote.crdt.RegisterService;
+import eu.antidote.jupyter.antidote.crdt.SetSetvice;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
@@ -24,6 +29,7 @@ public class AntidoteService {
     private SetRWService rwSetService;
     private CounterService counterService;
     private FatCounterService fatCounterService;
+    private MapAWService mapAWService;
     private InteractiveTransaction tx;
 
     public AntidoteService() {
@@ -175,5 +181,12 @@ public class AntidoteService {
             rwSetService = new SetRWService(this);
         }
         return rwSetService;
+    }
+
+    public MapAWService getMapAWService() {
+        if(mapAWService == null){
+            mapAWService = new MapAWService(this);
+        }
+        return mapAWService;
     }
 }
