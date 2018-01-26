@@ -5,7 +5,7 @@ import eu.antidotedb.client.*;
 
 public class IntegerService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public IntegerService(AntidoteService service){
         antidoteService = service;

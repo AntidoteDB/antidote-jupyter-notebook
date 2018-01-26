@@ -7,7 +7,7 @@ import eu.antidotedb.client.UpdateOp;
 
 public class RegisterService{
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public RegisterService(AntidoteService service){
         antidoteService = service;

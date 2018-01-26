@@ -3,25 +3,27 @@ package eu.antidote.jupyter.antidote.crdt;
 import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
+import eu.antidotedb.client.UpdateOp;
 
 import java.util.List;
 
 public class SetRWService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public SetRWService(AntidoteService service) {
         antidoteService = service;
     }
 
-    public String addToRWSet(String setKeyId, String... values) {
+    public UpdateOp addToRWSet(String setKeyId, String... values) {
         SetKey<String> setKey = Key.set_removeWins(setKeyId);
+        UpdateOp op;
         if(values.length>1) {
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.addAll(values));
+            op = setKey.addAll(values);
         }else{
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.add(values[0]));
+            op = setKey.add(values[0]);
         }
-        return setKey.toString();
+        return op;
     }
 
     public List<String> readRWSet(String setKeyId) {
@@ -29,12 +31,14 @@ public class SetRWService {
         return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), setKey);
     }
 
-    public void removeFromRWSet(String setKeyId, String... values){
+    public UpdateOp removeFromRWSet(String setKeyId, String... values){
         SetKey<String> setKey = Key.set_removeWins(setKeyId);
+        UpdateOp op;
         if(values.length>1) {
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.removeAll(values));
+            op = setKey.removeAll(values);
         }else{
-            antidoteService.getBucket().update(antidoteService.getAntidoteClient().noTransaction(), setKey.remove(values[0]));
+            op = setKey.remove(values[0]);
         }
+        return op;
     }
 }

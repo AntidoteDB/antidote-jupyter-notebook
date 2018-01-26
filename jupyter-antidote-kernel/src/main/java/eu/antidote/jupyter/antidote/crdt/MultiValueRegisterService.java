@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MultiValueRegisterService {
 
-    AntidoteService antidoteService;
+    private AntidoteService antidoteService;
 
     public MultiValueRegisterService(AntidoteService service){
         antidoteService = service;
