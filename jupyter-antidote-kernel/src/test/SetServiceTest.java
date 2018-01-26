@@ -1,12 +1,12 @@
-import eu.antidote.jupyter.antidote.crdt.SetSetvice;
+import eu.antidote.jupyter.antidote.crdt.SetService;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class SetServiceTest extends AbstractAntidoteTest {
-    SetSetvice service;
+    SetService service;
     public SetServiceTest(){
         super();
-        service = new SetSetvice(antidoteService);
+        service = new SetService(antidoteService);
     }
 
     @Test
