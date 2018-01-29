@@ -23,8 +23,7 @@ public class FatCounterService {
         return fatCounterKey.reset();
     }
 
-    public int readFatCounter(String fatCounterId){
-        CounterKey fatCounterKey = Key.fatCounter(fatCounterId);
-        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), fatCounterKey);
+    public Key getFatCounterKey(String fatCounterId){
+        return Key.fatCounter(fatCounterId);
     }
 }

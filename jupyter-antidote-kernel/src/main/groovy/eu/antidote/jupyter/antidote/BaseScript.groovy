@@ -20,6 +20,7 @@ package eu.antidote.jupyter.antidote
 import eu.antidotedb.client.AntidoteTransaction
 import eu.antidotedb.client.Bucket
 import eu.antidotedb.client.InteractiveTransaction
+import eu.antidotedb.client.Key
 import eu.antidotedb.client.UpdateOp
 
 /**
@@ -91,6 +92,10 @@ abstract class BaseScript extends Script {
         antidote.applyUpdate(updateOperation)
     }
 
+    Object read(Key key) {
+        return antidote.readByKey(key);
+    }
+
     //-----------------LWREGISTER METHODS----------------------------//
     UpdateOp assignLWRegister(String registerKey, String value){
         return antidote.getRegisterService().assignRegister(registerKey, value)
@@ -150,20 +155,20 @@ abstract class BaseScript extends Script {
     }
 
     //IntegerKey
-    String assignInteger(String integerId, int value){
+    UpdateOp assignInteger(String integerId, int value){
         return antidote.getIntegerService().assignInteger(integerId, value);
     }
 
-    String incrementInteger(String integerId, int incrementValue){
+    UpdateOp incrementInteger(String integerId, int incrementValue){
         return antidote.getIntegerService().incrementInteger(integerId, incrementValue);
     }
 
-    String readInteger(String integerKey){
-        return antidote.getIntegerService().readInteger(integerKey);
+    Key getIntegerKey(String integerKey){
+        return antidote.getIntegerService().getKey(integerKey);
     }
 
     //CounterKey
-    String incrementCounter(String counterKey, int incrementValue) {
+    UpdateOp incrementCounter(String counterKey, int incrementValue) {
         return antidote.getCounterService().incrementCounter(counterKey, incrementValue);
     }
 
@@ -172,11 +177,11 @@ abstract class BaseScript extends Script {
     }
 
     //FatCounterKey
-    String incrementFatCounter(String fatCounterKey, int incrementValue) {
+    UpdateOp incrementFatCounter(String fatCounterKey, int incrementValue) {
         return antidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
     }
 
-    String resetFatCounter(String fatCounterKey) {
+    UpdateOp resetFatCounter(String fatCounterKey) {
         return antidote.getFatCounterService().resetFatCounter(fatCounterKey);
     }
 

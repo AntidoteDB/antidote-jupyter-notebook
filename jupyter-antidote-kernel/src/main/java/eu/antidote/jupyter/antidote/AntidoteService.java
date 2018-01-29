@@ -117,6 +117,10 @@ public class AntidoteService {
         bucket.update(antidoteClient.noTransaction(), update);
     }
 
+    public Object readByKey(Key key) {
+        return bucket.read(antidoteClient.noTransaction(), key);
+    }
+
     public String nextSessionId() {
         return new BigInteger(130, random).toString(32);
     }

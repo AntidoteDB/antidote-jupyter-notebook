@@ -18,9 +18,8 @@ public class CounterService {
         return counterKey.increment(incrementValue);
     }
 
-    public int readCounter(String counterId){
-        CounterKey counterKey = Key.counter(counterId);
-        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), counterKey);
+    public Key getKey(String counterId){
+        return Key.counter(counterId);
     }
 
 }

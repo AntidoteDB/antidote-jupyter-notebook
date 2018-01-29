@@ -21,8 +21,7 @@ public class IntegerService {
         return integerKey.increment(incrementValue);
     }
 
-    public long readInteger(String integerId){
-        IntegerKey integerKey = Key.integer(integerId);
-        return (Long) antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), integerKey);
+    public Key getKey(String integerId){
+        return Key.integer(integerId);
     }
 }
