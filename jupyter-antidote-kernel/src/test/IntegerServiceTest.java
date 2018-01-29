@@ -1,4 +1,5 @@
 import eu.antidote.jupyter.antidote.crdt.IntegerService;
+import eu.antidotedb.client.IntegerKey;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -11,25 +12,27 @@ public class IntegerServiceTest extends AbstractAntidoteTest{
     private IntegerService service;
     public IntegerServiceTest(){
         super();
-        service = new IntegerService(antidoteService);
+        service = new IntegerService();
     }
 
     @Test
     public void testAssignInteger(){
 
-        antidoteService.applyUpdate(service.assignInteger("key1", 1));
+        IntegerKey key1 = (IntegerKey)service.getKey("key1");
+        antidoteService.applyUpdate(service.assignInteger(key1, 1));
 
-        long readValue = service.readInteger("key1");
+        long readValue = (Long) antidoteService.readByKey(key1);
         assertEquals(1, readValue);
     }
 
     @Test
     public void testIncrementInteger() {
 
-        antidoteService.applyUpdate(service.assignInteger("key2", 1));
-        antidoteService.applyUpdate(service.incrementInteger("key2", 3));
+        IntegerKey key2 = (IntegerKey)service.getKey("key2");
+        antidoteService.applyUpdate(service.assignInteger(key2, 1));
+        antidoteService.applyUpdate(service.incrementInteger(key2, 3));
 
-        long readValue = service.readInteger("key2");
+        long readValue = (Long) antidoteService.readByKey(key2);
         assertEquals(4, readValue);
     }
 

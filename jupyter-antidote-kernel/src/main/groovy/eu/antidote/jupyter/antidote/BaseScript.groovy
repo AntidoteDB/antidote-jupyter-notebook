@@ -19,6 +19,8 @@ package eu.antidote.jupyter.antidote
 
 import eu.antidotedb.client.AntidoteTransaction
 import eu.antidotedb.client.Bucket
+import eu.antidotedb.client.CounterKey
+import eu.antidotedb.client.IntegerKey
 import eu.antidotedb.client.InteractiveTransaction
 import eu.antidotedb.client.Key
 import eu.antidotedb.client.UpdateOp
@@ -41,18 +43,6 @@ abstract class BaseScript extends Script {
         antidote = new AntidoteService()
     }
 
-    String showString(String name){
-        return  "Hello thr "+ name
-    }
-
-    int numberMethod(int x, int y){
-        return x + y
-    }
-    //Test antidote client call
-    int doAntidoteTx(int x, int y, int z){
-        return antidote.staticTransactionWithRead(x, y, z)
-    }
-
     /**
      * Execute the docker command to emulate network connection between antidote notes
      * executed in Antidote1
@@ -69,11 +59,6 @@ abstract class BaseScript extends Script {
     String disconnectAntidotes(){
         Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 100%")
         return "Disconnecting Antidote nodes."
-    }
-
-    String createBucket(String bucketName){
-        Bucket bucket = Bucket.bucket(bucketName)
-
     }
 
     AntidoteTransaction startTransaction(){
@@ -155,38 +140,38 @@ abstract class BaseScript extends Script {
     }
 
     //IntegerKey
-    UpdateOp assignInteger(String integerId, int value){
-        return antidote.getIntegerService().assignInteger(integerId, value);
+    UpdateOp assignInteger(IntegerKey integerKey, int value){
+        return antidote.getIntegerService().assignInteger(integerKey, value);
     }
 
-    UpdateOp incrementInteger(String integerId, int incrementValue){
-        return antidote.getIntegerService().incrementInteger(integerId, incrementValue);
+    UpdateOp incrementInteger(IntegerKey integerKey, int incrementValue){
+        return antidote.getIntegerService().incrementInteger(integerKey, incrementValue);
     }
 
-    Key getIntegerKey(String integerKey){
+    IntegerKey getIntegerKey(String integerKey){
         return antidote.getIntegerService().getKey(integerKey);
     }
 
     //CounterKey
-    UpdateOp incrementCounter(String counterKey, int incrementValue) {
+    UpdateOp incrementCounter(CounterKey counterKey, int incrementValue) {
         return antidote.getCounterService().incrementCounter(counterKey, incrementValue);
     }
 
-    String readCounter(String counterKey){
-        return antidote.getCounterService().readCounter(counterKey);
+    CounterKey getCounterKey(String counterKey){
+        return antidote.getCounterService().getKey(counterKey);
     }
 
     //FatCounterKey
-    UpdateOp incrementFatCounter(String fatCounterKey, int incrementValue) {
+    UpdateOp incrementFatCounter(CounterKey fatCounterKey, int incrementValue) {
         return antidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
     }
 
-    UpdateOp resetFatCounter(String fatCounterKey) {
+    UpdateOp resetFatCounter(CounterKey fatCounterKey) {
         return antidote.getFatCounterService().resetFatCounter(fatCounterKey);
     }
 
-    String readFatCounter(String fatCounterKey) {
-        return antidote.getFatCounterService().readFatCounter(fatCounterKey);
+    CounterKey getFatCounterKey(String fatCounterKey) {
+        return antidote.getFatCounterService().getKey(fatCounterKey);
     }
 
     String version() {
