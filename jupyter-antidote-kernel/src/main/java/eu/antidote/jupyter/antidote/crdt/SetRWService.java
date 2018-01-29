@@ -9,12 +9,6 @@ import java.util.List;
 
 public class SetRWService {
 
-    private AntidoteService antidoteService;
-
-    public SetRWService(AntidoteService service) {
-        antidoteService = service;
-    }
-
     public UpdateOp addToRWSet(String setKeyId, String... values) {
         SetKey<String> setKey = Key.set_removeWins(setKeyId);
         UpdateOp op;
@@ -26,9 +20,8 @@ public class SetRWService {
         return op;
     }
 
-    public List<String> readRWSet(String setKeyId) {
-        SetKey<String> setKey = Key.set_removeWins(setKeyId);
-        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), setKey);
+    public Key getKey(String keyId){
+         return Key.set_removeWins(keyId);
     }
 
     public UpdateOp removeFromRWSet(String setKeyId, String... values){

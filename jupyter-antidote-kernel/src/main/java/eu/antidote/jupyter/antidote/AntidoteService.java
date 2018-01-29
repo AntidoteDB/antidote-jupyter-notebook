@@ -13,10 +13,12 @@ import java.util.List;
 public class AntidoteService {
 
     final private AntidoteClient antidoteClient;
-    final CountingTransformer messageCounter;
+    private AntidoteClient antidote2Client;
     final private Bucket bucket;
     final String bucketKey;
-    final SecureRandom random;
+    private Bucket bucket2;
+    String bucket2Key;
+    SecureRandom random;
     private RegisterService registerService;
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
@@ -30,13 +32,24 @@ public class AntidoteService {
     public AntidoteService() {
 
         List<TransformerFactory> transformers = new ArrayList();
-        transformers.add(messageCounter = new CountingTransformer());
+        transformers.add(new CountingTransformer());
         AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
         this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
         this.random = new SecureRandom();
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);
 
+    }
+
+    public AntidoteClient startAntidote2Service(){
+        List<TransformerFactory> transformers = new ArrayList();
+        transformers.add(new CountingTransformer());
+        AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
+        this.antidote2Client = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
+        random = new SecureRandom();
+        this.bucket2Key = nextSessionId();
+        this.bucket2 = Bucket.bucket(bucketKey);
+        return antidote2Client;
     }
 
     /**
@@ -95,12 +108,6 @@ public class AntidoteService {
         return mapReadResult.get(registerKey);
     }
 
-    public String createMultiValueRegister(String registerKeyId, String registerValue){
-        MVRegisterKey<String> mvRegisterKey = Key.multiValueRegister(registerKeyId);
-        bucket.update(antidoteClient.noTransaction(), mvRegisterKey.assign(registerValue));
-        return registerKeyId;
-    }
-
     public InteractiveTransaction startTransaction(){
         return antidoteClient.startTransaction();
     }
@@ -131,7 +138,7 @@ public class AntidoteService {
 
     public RegisterService getRegisterService(){
         if(registerService == null){
-            registerService = new RegisterService(this);
+            registerService = new RegisterService();
         }
         return registerService;
     }
@@ -159,21 +166,21 @@ public class AntidoteService {
 
     public MultiValueRegisterService getMvRegisterService() {
         if(mvRegisterService == null){
-            mvRegisterService = new MultiValueRegisterService(this);
+            mvRegisterService = new MultiValueRegisterService();
         }
         return mvRegisterService;
     }
 
     public SetService getSetService() {
         if(setService == null){
-            setService = new SetService(this);
+            setService = new SetService();
         }
         return setService;
     }
 
     public SetRWService getRwSetService() {
         if(rwSetService == null){
-            rwSetService = new SetRWService(this);
+            rwSetService = new SetRWService();
         }
         return rwSetService;
     }

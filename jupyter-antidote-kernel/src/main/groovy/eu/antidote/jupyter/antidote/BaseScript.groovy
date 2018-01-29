@@ -96,9 +96,14 @@ abstract class BaseScript extends Script {
         return antidote.getRegisterService().assignRegister(registerKey, value)
     }
 
+    Key getLWRegisterKey(String keyid){
+
+    }
+
     String readLWRegister(String registerKey){
         return antidote.getRegisterService().readRegister(registerKey)
     }
+
 
 
     //-------------------MVREGISTER----------------------------------//
