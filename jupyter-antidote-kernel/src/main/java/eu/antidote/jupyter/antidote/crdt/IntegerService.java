@@ -1,27 +1,18 @@
 package eu.antidote.jupyter.antidote.crdt;
 
-import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.*;
 
 public class IntegerService {
 
-    private AntidoteService antidoteService;
-
-    public IntegerService(AntidoteService service){
-        antidoteService = service;
-    }
-
-    public UpdateOp assignInteger(String integerId, Integer integerValue){
-        IntegerKey integerKey = Key.integer(integerId);
+    public UpdateOp assignInteger(IntegerKey integerKey, Integer integerValue){
         return integerKey.assign(integerValue);
     }
 
-    public UpdateOp incrementInteger(String integerId, Integer incrementValue) {
-        IntegerKey integerKey = Key.integer(integerId);
+    public UpdateOp incrementInteger(IntegerKey integerKey, Integer incrementValue) {
         return integerKey.increment(incrementValue);
     }
 
-    public Key getKey(String integerId){
+    public IntegerKey getKey(String integerId){
         return Key.integer(integerId);
     }
 }

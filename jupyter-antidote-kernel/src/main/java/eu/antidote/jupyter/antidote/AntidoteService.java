@@ -27,7 +27,6 @@ public class AntidoteService {
     private CounterService counterService;
     private FatCounterService fatCounterService;
     private MapAWService mapAWService;
-    private InteractiveTransaction tx;
 
     public AntidoteService() {
 
@@ -39,54 +38,6 @@ public class AntidoteService {
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);
 
-    }
-
-    public AntidoteClient startAntidote2Service(){
-        List<TransformerFactory> transformers = new ArrayList();
-        transformers.add(new CountingTransformer());
-        AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
-        this.antidote2Client = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
-        random = new SecureRandom();
-        this.bucket2Key = nextSessionId();
-        this.bucket2 = Bucket.bucket(bucketKey);
-        return antidote2Client;
-    }
-
-    /**
-     * From the Antidote Java Client AntidoteTest.
-     */
-    public void doStaticTransaction(){
-        CounterKey lowCounter = Key.counter("testCounter");
-        IntegerKey lowInt = Key.integer("testInteger");
-        SetKey<String> orSetKey = Key.set("testorSetRef", ValueCoder.utf8String);
-        AntidoteStaticTransaction tx = antidoteClient.createStaticTransaction();
-        bucket.update(tx, lowInt.increment(3));
-        bucket.update(tx, lowCounter.increment(4));
-        bucket.update(tx, orSetKey.add("Hi"));
-        bucket.update(tx, orSetKey.add("Bye"));
-        bucket.update(tx, orSetKey.add("yo"));
-        tx.commitTransaction();
-    }
-
-    public int staticTransactionWithRead(int val1, int val2, int val3){
-        CounterKey c1 = Key.counter("c1");
-        CounterKey c2 = Key.counter("c2");
-        CounterKey c3 = Key.counter("c3");
-
-        AntidoteStaticTransaction stx = antidoteClient.createStaticTransaction();
-        bucket.update(stx, c1.increment(val1));
-        bucket.update(stx, c2.increment(val2));
-        bucket.update(stx, c3.increment(val3));
-        stx.commitTransaction();
-
-        BatchRead batchRead = antidoteClient.newBatchRead();
-        BatchReadResult<Integer> c1val = bucket.read(batchRead, c1);
-        BatchReadResult<Integer> c2val = bucket.read(batchRead, c2);
-        BatchReadResult<Integer> c3val = bucket.read(batchRead, c3);
-        batchRead.commit(antidoteClient.noTransaction());
-
-        int sum = c1val.get() + c2val.get() + c3val.get();
-        return sum;
     }
 
     public String createAWMap(String mapId){
@@ -149,21 +100,21 @@ public class AntidoteService {
 
     public IntegerService getIntegerService() {
          if(integerService == null) {
-             integerService = new IntegerService(this);
+             integerService = new IntegerService();
          }
          return integerService;
     }
 
     public CounterService getCounterService() {
         if(counterService == null) {
-            counterService = new CounterService(this);
+            counterService = new CounterService();
         }
         return counterService;
     }
 
     public FatCounterService getFatCounterService() {
         if(fatCounterService == null) {
-            fatCounterService = new FatCounterService(this);
+            fatCounterService = new FatCounterService();
         }
         return fatCounterService;
     }

@@ -1,4 +1,6 @@
 import eu.antidote.jupyter.antidote.crdt.CounterService;
+import eu.antidotedb.client.CounterKey;
+import eu.antidotedb.client.Key;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -11,17 +13,17 @@ public class CounterServiceTest extends AbstractAntidoteTest{
     private CounterService service;
     public CounterServiceTest(){
         super();
-        service = new CounterService(antidoteService);
+        service = new CounterService();
     }
 
     @Test
     public void testIncrementInteger() {
 
-        antidoteService.applyUpdate(service.incrementCounter("key1", 1));
-        antidoteService.applyUpdate(service.incrementCounter("key1", 2));
+        CounterKey key1 = (CounterKey)service.getKey("key1");
+        antidoteService.applyUpdate(service.incrementCounter(key1, 1));
+        antidoteService.applyUpdate(service.incrementCounter(key1, 2));
 
-
-        int readValue = service.readCounter("key1");
+        int readValue = (Integer) antidoteService.readByKey(key1);
         assertEquals(3, readValue);
     }
 

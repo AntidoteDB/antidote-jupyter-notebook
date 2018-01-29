@@ -1,4 +1,5 @@
 import eu.antidote.jupyter.antidote.crdt.FatCounterService;
+import eu.antidotedb.client.CounterKey;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,24 +13,27 @@ public class FatCounterServiceTest extends AbstractAntidoteTest{
     private FatCounterService service;
     public FatCounterServiceTest(){
         super();
-        service = new FatCounterService(antidoteService);
+        service = new FatCounterService();
     }
 
     @Test
     public void testIncrementInteger() {
 
-        antidoteService.applyUpdate(service.incrementFatCounter("key1", 1));
-        antidoteService.applyUpdate(service.incrementFatCounter("key1", 2));
+        CounterKey key1 = (CounterKey)service.getKey("key1");
+        antidoteService.applyUpdate(service.incrementFatCounter(key1, 1));
+        antidoteService.applyUpdate(service.incrementFatCounter(key1, 2));
 
-        int readValue = service.readFatCounter("key1");
+        int readValue = (Integer) antidoteService.readByKey(key1);
         assertEquals(3, readValue);
     }
 
     @Test
     public void testResetInteger() {
-        antidoteService.applyUpdate(service.resetFatCounter("key1"));
 
-        int readValue = service.readFatCounter("key1");
+        CounterKey key1 = (CounterKey)service.getKey("key1");
+        antidoteService.applyUpdate(service.resetFatCounter(key1));
+
+        int readValue = (Integer) antidoteService.readByKey(key1);
         assertEquals(0, readValue);
     }
 }
