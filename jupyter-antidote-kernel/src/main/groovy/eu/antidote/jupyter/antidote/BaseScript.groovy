@@ -17,12 +17,7 @@
 
 package eu.antidote.jupyter.antidote
 
-import eu.antidotedb.client.AntidoteTransaction
-import eu.antidotedb.client.Bucket
-import eu.antidotedb.client.InteractiveTransaction
-import eu.antidotedb.client.Key
-import eu.antidotedb.client.UpdateOp
-
+import eu.antidotedb.client.*
 /**
  * Based on work of
  * @author Keith Suderman
@@ -97,55 +92,49 @@ abstract class BaseScript extends Script {
     }
 
     //-----------------LWREGISTER METHODS----------------------------//
-    UpdateOp assignLWRegister(String registerKey, String value){
+
+    RegisterKey<String> getLWRegisterKey(String keyid){
+        return antidote.getRegisterService().getKey(keyid)
+    }
+
+    UpdateOp assignLWRegister(RegisterKey<String> registerKey, String value){
         return antidote.getRegisterService().assignRegister(registerKey, value)
     }
 
-    Key getLWRegisterKey(String keyid){
-
-    }
-
-    String readLWRegister(String registerKey){
-        return antidote.getRegisterService().readRegister(registerKey)
-    }
-
-
-
     //-------------------MVREGISTER----------------------------------//
-    UpdateOp assignMVRegister(String registerKey, String value){
-        return antidote.getMvRegisterService().AssignRegister(registerKey, value)
+    MVRegisterKey<String> getMVRegisterKey(String keyId){
+        return antidote.getMvRegisterService().getKey(keyId)
     }
 
-    List<String> readMVRegister(String registerKey){
-        return antidote.getMvRegisterService().readRegister(registerKey)
+    UpdateOp assignMVRegister(MVRegisterKey<String> registerKey, String value){
+        return antidote.getMvRegisterService().assignRegister(registerKey, value)
     }
 
     //-----------------SET------------------------------------------//
-    UpdateOp addToSet(String setKey, String... values){
+    SetKey<String> getSetKey(String keyId){
+        return antidote.getSetService().getKey(keyId)
+    }
+
+    UpdateOp addToSet(SetKey<String> setKey, String... values){
        return antidote.getSetService().addToSet(setKey, values)
     }
 
-    UpdateOp removeFromSet(String setKey, String... values){
+    UpdateOp removeFromSet(SetKey<String> setKey, String... values){
         return antidote.getSetService().removeFromSet(setKey, values)
     }
 
-    List<String> readSet(String setKey){
-        return antidote.getSetService().readSet(setKey)
+    //-----------------RWSET------------------------------------------//
+    SetKey<String> getRWSetKey(String keyId){
+        return antidote.getRwSetService().getKey(keyId)
     }
 
-    //-----------------RWSET------------------------------------------//
-    void addToRWSet(String setKey, String... values){
+    UpdateOp addToRWSet(SetKey<String> setKey, String... values){
         antidote.getRwSetService().addToRWSet(setKey, values)
     }
 
-    void removeFromRWSet(String setKey, String... values){
+    UpdateOp removeFromRWSet(SetKey<String> setKey, String... values){
         antidote.getRwSetService().removeFromRWSet(setKey, values)
     }
-
-    List<String> readRWSet(String setKey){
-        return antidote.getRwSetService().readRWSet(setKey)
-    }
-
 
     String createAWMap(String mapId){
         return antidote.createAWMap(mapId)

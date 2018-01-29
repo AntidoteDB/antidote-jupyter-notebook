@@ -6,12 +6,11 @@ import eu.antidotedb.client.UpdateOp;
 
 public class RegisterService{
 
-    public UpdateOp assignRegister(String registerKeyId, String registerValue){
-        RegisterKey<String> registerKey = Key.register(registerKeyId);
+    public UpdateOp assignRegister(RegisterKey<String> registerKey, String registerValue){
         return registerKey.assign(registerValue);
     }
 
-    public Key getKey(String keyId){
+    public RegisterKey<String> getKey(String keyId){
         return Key.register(keyId);
     }
 

@@ -1,5 +1,8 @@
 import eu.antidote.jupyter.antidote.crdt.SetRWService;
+import eu.antidotedb.client.SetKey;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,37 +10,43 @@ public class SetRWServiceTest extends AbstractAntidoteTest{
     private SetRWService service;
     public SetRWServiceTest(){
         super();
-        service = new SetRWService(antidoteService);
+        service = new SetRWService();
     }
 
     @Test
     public void testAddOneValueToRWSet(){
-        antidoteService.applyUpdate(service.addToRWSet("key1", "testval"));
-        assertEquals("testval", service.readRWSet("key1").get(0));
+        SetKey<String> setKey = service.getKey("key1");
+        antidoteService.applyUpdate(service.addToRWSet(setKey, "testval"));
+        assertEquals("testval", ((List<String>)antidoteService.readByKey(setKey)).get(0));
     }
 
     @Test
     public void testAddValuesToRWSet(){
-        antidoteService.applyUpdate(service.addToRWSet("key2", "testval1", "testval2"));
-        assertEquals(2, service.readRWSet("key2").size());
-        assertEquals("testval2", service.readRWSet("key2").get(1));
+        SetKey<String> setKey = service.getKey("key2");
+        antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2"));
+        List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
+        assertEquals(2, readValues.size());
+        assertEquals("testval2", readValues.get(1));
     }
 
     @Test
     public void testRemoveValueFromRWSet(){
-        antidoteService.applyUpdate(service.addToRWSet("key3", "testval1", "testval2"));
-        antidoteService.applyUpdate(service.removeFromRWSet("key3", "testval2"));
-
-        assertEquals(1, service.readRWSet("key3").size());
-        assertEquals("testval1", service.readRWSet("key3").get(0));
+        SetKey<String> setKey = service.getKey("key3");
+        antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2"));
+        antidoteService.applyUpdate(service.removeFromRWSet(setKey, "testval2"));
+        List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
+        assertEquals(1, readValues.size());
+        assertEquals("testval1", readValues.get(0));
     }
 
     @Test
     public void testRemoveValuesFromRWSet(){
-        antidoteService.applyUpdate(service.addToRWSet("key4", "testval1", "testval2", "testval3"));
-        antidoteService.applyUpdate(service.removeFromRWSet("key4", "testval1", "testval3"));
+        SetKey<String> setKey = service.getKey("key4");
+        antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2", "testval3"));
+        antidoteService.applyUpdate(service.removeFromRWSet(setKey, "testval1", "testval3"));
+        List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
 
-        assertEquals(1, service.readRWSet("key4").size());
-        assertEquals("testval2", service.readRWSet("key4").get(0));
+        assertEquals(1, readValues.size());
+        assertEquals("testval2", readValues.get(0));
     }
 }

@@ -20,6 +20,7 @@ public class CounterServiceTest extends AbstractAntidoteTest{
         antidoteService.applyUpdate(service.incrementCounter("key1", 1));
         antidoteService.applyUpdate(service.incrementCounter("key1", 2));
 
+
         int readValue = service.readCounter("key1");
         assertEquals(3, readValue);
     }

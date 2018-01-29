@@ -7,8 +7,7 @@ import eu.antidotedb.client.UpdateOp;
 
 public class SetService {
 
-    public UpdateOp addToSet(String setKeyId, String... values) {
-        SetKey<String> setKey = Key.set(setKeyId);
+    public UpdateOp addToSet(SetKey<String> setKey, String... values) {
         UpdateOp updateOp;
         if(values.length>1) {
             updateOp = setKey.addAll(values);
@@ -18,12 +17,11 @@ public class SetService {
         return updateOp;
     }
 
-    public Key getKey(String keyId){
+    public SetKey<String> getKey(String keyId){
         return Key.set(keyId);
     }
 
-    public UpdateOp removeFromSet(String setKeyId, String... values){
-        SetKey<String> setKey = Key.set(setKeyId);
+    public UpdateOp removeFromSet(SetKey<String> setKey, String... values){
         UpdateOp setUpdate;
         if(values.length>1) {
             setUpdate = setKey.removeAll(values);
