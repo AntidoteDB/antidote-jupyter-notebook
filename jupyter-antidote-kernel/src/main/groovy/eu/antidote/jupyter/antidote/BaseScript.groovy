@@ -17,14 +17,6 @@
 
 package eu.antidote.jupyter.antidote
 
-import eu.antidotedb.client.AntidoteTransaction
-import eu.antidotedb.client.Bucket
-import eu.antidotedb.client.CounterKey
-import eu.antidotedb.client.IntegerKey
-import eu.antidotedb.client.InteractiveTransaction
-import eu.antidotedb.client.Key
-import eu.antidotedb.client.UpdateOp
-
 import eu.antidotedb.client.*
 /**
  * Based on work of
@@ -39,9 +31,23 @@ abstract class BaseScript extends Script {
         Collection.metaClass.filter = { delegate.grep it }
     }
 
-    static AntidoteService antidote
+    static AntidoteService antidote1
+    static AntidoteService antidote2
+    static AntidoteService currentAntidote
     void init() {
-        antidote = new AntidoteService()
+        antidote1 = new AntidoteService(1)
+        currentAntidote = antidote1
+    }
+
+    void switchAntidote(int node){
+        if(node == 1){
+            currentAntidote = antidote1
+        }else if(node == 2){
+            if(antidote2 == null){
+                antidote2 = new AntidoteService(2)
+            }
+            currentAntidote = antidote2
+        }
     }
 
     /**
@@ -63,115 +69,115 @@ abstract class BaseScript extends Script {
     }
 
     AntidoteTransaction startTransaction(){
-        return antidote.startTransaction()
+        return currentAntidote.startTransaction()
     }
 
     void addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
-        antidote.addToTransaction(tx, updateOp)
+        currentAntidote.addToTransaction(tx, updateOp)
     }
 
     void commitTransaction(InteractiveTransaction tx){
-        antidote.commitTransaction(tx)
+        currentAntidote.commitTransaction(tx)
     }
 
     void applyUpdate(UpdateOp updateOperation){
-        antidote.applyUpdate(updateOperation)
+        currentAntidote.applyUpdate(updateOperation)
     }
 
     Object read(Key key) {
-        return antidote.readByKey(key);
+        return currentAntidote.readByKey(key);
     }
 
     //-----------------LWREGISTER METHODS----------------------------//
 
     RegisterKey<String> getLWRegisterKey(String keyid){
-        return antidote.getRegisterService().getKey(keyid)
+        return currentAntidote.getRegisterService().getKey(keyid)
     }
 
     UpdateOp assignLWRegister(RegisterKey<String> registerKey, String value){
-        return antidote.getRegisterService().assignRegister(registerKey, value)
+        return currentAntidote.getRegisterService().assignRegister(registerKey, value)
     }
 
     //-------------------MVREGISTER----------------------------------//
     MVRegisterKey<String> getMVRegisterKey(String keyId){
-        return antidote.getMvRegisterService().getKey(keyId)
+        return currentAntidote.getMvRegisterService().getKey(keyId)
     }
 
     UpdateOp assignMVRegister(MVRegisterKey<String> registerKey, String value){
-        return antidote.getMvRegisterService().assignRegister(registerKey, value)
+        return currentAntidote.getMvRegisterService().assignRegister(registerKey, value)
     }
 
     //-----------------SET------------------------------------------//
     SetKey<String> getSetKey(String keyId){
-        return antidote.getSetService().getKey(keyId)
+        return currentAntidote.getSetService().getKey(keyId)
     }
 
     UpdateOp addToSet(SetKey<String> setKey, String... values){
-       return antidote.getSetService().addToSet(setKey, values)
+       return currentAntidote.getSetService().addToSet(setKey, values)
     }
 
     UpdateOp removeFromSet(SetKey<String> setKey, String... values){
-        return antidote.getSetService().removeFromSet(setKey, values)
+        return currentAntidote.getSetService().removeFromSet(setKey, values)
     }
 
     //-----------------RWSET------------------------------------------//
     SetKey<String> getRWSetKey(String keyId){
-        return antidote.getRwSetService().getKey(keyId)
+        return currentAntidote.getRwSetService().getKey(keyId)
     }
 
     UpdateOp addToRWSet(SetKey<String> setKey, String... values){
-        antidote.getRwSetService().addToRWSet(setKey, values)
+        currentAntidote.getRwSetService().addToRWSet(setKey, values)
     }
 
     UpdateOp removeFromRWSet(SetKey<String> setKey, String... values){
-        antidote.getRwSetService().removeFromRWSet(setKey, values)
+        currentAntidote.getRwSetService().removeFromRWSet(setKey, values)
     }
 
     String createAWMap(String mapId){
-        return antidote.createAWMap(mapId)
+        return currentAntidote.createAWMap(mapId)
     }
 
     String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
-        return antidote.registerInMap(mapKeyId, registerKeyId, registerValue)
+        return currentAntidote.registerInMap(mapKeyId, registerKeyId, registerValue)
     }
 
     String readRegisterInMap(String mapId, String registerKeyId){
-        return antidote.readRegisterInMap(mapId, registerKeyId)
+        return currentAntidote.readRegisterInMap(mapId, registerKeyId)
     }
 
     //IntegerKey
     UpdateOp assignInteger(IntegerKey integerKey, int value){
-        return antidote.getIntegerService().assignInteger(integerKey, value);
+        return currentAntidote.getIntegerService().assignInteger(integerKey, value);
     }
 
     UpdateOp incrementInteger(IntegerKey integerKey, int incrementValue){
-        return antidote.getIntegerService().incrementInteger(integerKey, incrementValue);
+        return currentAntidote.getIntegerService().incrementInteger(integerKey, incrementValue);
     }
 
     IntegerKey getIntegerKey(String integerKey){
-        return antidote.getIntegerService().getKey(integerKey);
+        return currentAntidote.getIntegerService().getKey(integerKey);
     }
 
     //CounterKey
     UpdateOp incrementCounter(CounterKey counterKey, int incrementValue) {
-        return antidote.getCounterService().incrementCounter(counterKey, incrementValue);
+        return currentAntidote.getCounterService().incrementCounter(counterKey, incrementValue);
     }
 
     CounterKey getCounterKey(String counterKey){
-        return antidote.getCounterService().getKey(counterKey);
+        return currentAntidote.getCounterService().getKey(counterKey);
     }
 
     //FatCounterKey
     UpdateOp incrementFatCounter(CounterKey fatCounterKey, int incrementValue) {
-        return antidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
+        return currentAntidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
     }
 
     UpdateOp resetFatCounter(CounterKey fatCounterKey) {
-        return antidote.getFatCounterService().resetFatCounter(fatCounterKey);
+        return currentAntidote.getFatCounterService().resetFatCounter(fatCounterKey);
     }
 
     CounterKey getFatCounterKey(String fatCounterKey) {
-        return antidote.getFatCounterService().getKey(fatCounterKey);
+        return currentAntidote.getFatCounterService().getKey(fatCounterKey);
     }
 
     String version() {
@@ -192,7 +198,7 @@ abstract class BaseScript extends Script {
 
     //Map_aw key
     String readMapAW(String mapKey) {
-        return antidote.getMapAWService().readMapAW(mapKey);
+        return currentAntidote.getMapAWService().readMapAW(mapKey);
     }
 
     /*void updateMapAW(String mapKey, String elementKey) {

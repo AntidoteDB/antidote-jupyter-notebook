@@ -12,12 +12,9 @@ import java.util.List;
 
 public class AntidoteService {
 
-    final private AntidoteClient antidoteClient;
-    private AntidoteClient antidote2Client;
+    private AntidoteClient antidoteClient;
     final private Bucket bucket;
     final String bucketKey;
-    private Bucket bucket2;
-    String bucket2Key;
     SecureRandom random;
     private RegisterService registerService;
     private IntegerService integerService;
@@ -28,12 +25,16 @@ public class AntidoteService {
     private FatCounterService fatCounterService;
     private MapAWService mapAWService;
 
-    public AntidoteService() {
+    public AntidoteService(int node) {
 
         List<TransformerFactory> transformers = new ArrayList();
         transformers.add(new CountingTransformer());
         AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
-        this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
+        if(node == 1) {
+            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
+        }else if(node == 2){
+            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
+        }
         this.random = new SecureRandom();
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);
