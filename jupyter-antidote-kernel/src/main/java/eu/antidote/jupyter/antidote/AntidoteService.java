@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AntidoteService {
 
-    final private AntidoteClient antidoteClient;
+    private AntidoteClient antidoteClient;
     final CountingTransformer messageCounter;
     final private Bucket bucket;
     final String bucketKey;
@@ -25,6 +25,7 @@ public class AntidoteService {
     private CounterService counterService;
     private FatCounterService fatCounterService;
     private MapAWService mapAWService;
+    private int antidote_node = 1;
 
     public AntidoteService() {
 
@@ -36,6 +37,18 @@ public class AntidoteService {
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);
 
+    }
+
+    public void switchAntidote() {
+        if (antidote_node == 1) {
+            List<TransformerFactory> transformers = new ArrayList();
+            AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
+            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
+        } else {
+            List<TransformerFactory> transformers = new ArrayList();
+            AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
+            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
+        }
     }
 
     public String createAWMap(String mapId){
@@ -146,7 +159,7 @@ public class AntidoteService {
 
     public MapAWService getMapAWService() {
         if(mapAWService == null){
-            mapAWService = new MapAWService(this);
+            mapAWService = new MapAWService();
         }
         return mapAWService;
     }
