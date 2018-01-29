@@ -1,22 +1,12 @@
 package eu.antidote.jupyter.antidote.crdt;
 
-import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
 
-import java.util.List;
-
 public class SetRWService {
 
-    private AntidoteService antidoteService;
-
-    public SetRWService(AntidoteService service) {
-        antidoteService = service;
-    }
-
-    public UpdateOp addToRWSet(String setKeyId, String... values) {
-        SetKey<String> setKey = Key.set_removeWins(setKeyId);
+    public UpdateOp addToRWSet(SetKey<String> setKey, String... values) {
         UpdateOp op;
         if(values.length>1) {
             op = setKey.addAll(values);
@@ -26,13 +16,11 @@ public class SetRWService {
         return op;
     }
 
-    public List<String> readRWSet(String setKeyId) {
-        SetKey<String> setKey = Key.set_removeWins(setKeyId);
-        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), setKey);
+    public SetKey<String> getKey(String keyId){
+         return Key.set_removeWins(keyId);
     }
 
-    public UpdateOp removeFromRWSet(String setKeyId, String... values){
-        SetKey<String> setKey = Key.set_removeWins(setKeyId);
+    public UpdateOp removeFromRWSet(SetKey<String> setKey, String... values){
         UpdateOp op;
         if(values.length>1) {
             op = setKey.removeAll(values);

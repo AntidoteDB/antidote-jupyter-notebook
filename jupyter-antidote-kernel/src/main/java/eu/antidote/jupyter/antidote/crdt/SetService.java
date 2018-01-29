@@ -1,22 +1,13 @@
 package eu.antidote.jupyter.antidote.crdt;
 
-import eu.antidote.jupyter.antidote.AntidoteService;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
 
-import java.util.List;
 
 public class SetService {
 
-    private AntidoteService antidoteService;
-
-    public SetService(AntidoteService service) {
-        antidoteService = service;
-    }
-
-    public UpdateOp addToSet(String setKeyId, String... values) {
-        SetKey<String> setKey = Key.set(setKeyId);
+    public UpdateOp addToSet(SetKey<String> setKey, String... values) {
         UpdateOp updateOp;
         if(values.length>1) {
             updateOp = setKey.addAll(values);
@@ -26,13 +17,11 @@ public class SetService {
         return updateOp;
     }
 
-    public List<String> readSet(String setKeyId) {
-        SetKey<String> setKey = Key.set(setKeyId);
-        return antidoteService.getBucket().read(antidoteService.getAntidoteClient().noTransaction(), setKey);
+    public SetKey<String> getKey(String keyId){
+        return Key.set(keyId);
     }
 
-    public UpdateOp removeFromSet(String setKeyId, String... values){
-        SetKey<String> setKey = Key.set(setKeyId);
+    public UpdateOp removeFromSet(SetKey<String> setKey, String... values){
         UpdateOp setUpdate;
         if(values.length>1) {
             setUpdate = setKey.removeAll(values);

@@ -12,11 +12,13 @@ import java.util.List;
 
 public class AntidoteService {
 
-    private AntidoteClient antidoteClient;
-    final CountingTransformer messageCounter;
+    final private AntidoteClient antidoteClient;
+    private AntidoteClient antidote2Client;
     final private Bucket bucket;
     final String bucketKey;
-    final SecureRandom random;
+    private Bucket bucket2;
+    String bucket2Key;
+    SecureRandom random;
     private RegisterService registerService;
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
@@ -25,30 +27,17 @@ public class AntidoteService {
     private CounterService counterService;
     private FatCounterService fatCounterService;
     private MapAWService mapAWService;
-    private int antidote_node = 1;
 
     public AntidoteService() {
 
         List<TransformerFactory> transformers = new ArrayList();
-        transformers.add(messageCounter = new CountingTransformer());
+        transformers.add(new CountingTransformer());
         AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
         this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
         this.random = new SecureRandom();
         this.bucketKey = nextSessionId();
         this.bucket = Bucket.bucket(bucketKey);
 
-    }
-
-    public void switchAntidote() {
-        if (antidote_node == 1) {
-            List<TransformerFactory> transformers = new ArrayList();
-            AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
-            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
-        } else {
-            List<TransformerFactory> transformers = new ArrayList();
-            AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();
-            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
-        }
     }
 
     public String createAWMap(String mapId){
@@ -68,12 +57,6 @@ public class AntidoteService {
         RegisterKey<String> registerKey = Key.register(registerKeyId);
         MapKey.MapReadResult mapReadResult = bucket.read(antidoteClient.noTransaction(), mapKey);
         return mapReadResult.get(registerKey);
-    }
-
-    public String createMultiValueRegister(String registerKeyId, String registerValue){
-        MVRegisterKey<String> mvRegisterKey = Key.multiValueRegister(registerKeyId);
-        bucket.update(antidoteClient.noTransaction(), mvRegisterKey.assign(registerValue));
-        return registerKeyId;
     }
 
     public InteractiveTransaction startTransaction(){
@@ -110,7 +93,7 @@ public class AntidoteService {
 
     public RegisterService getRegisterService(){
         if(registerService == null){
-            registerService = new RegisterService(this);
+            registerService = new RegisterService();
         }
         return registerService;
     }
@@ -138,21 +121,21 @@ public class AntidoteService {
 
     public MultiValueRegisterService getMvRegisterService() {
         if(mvRegisterService == null){
-            mvRegisterService = new MultiValueRegisterService(this);
+            mvRegisterService = new MultiValueRegisterService();
         }
         return mvRegisterService;
     }
 
     public SetService getSetService() {
         if(setService == null){
-            setService = new SetService(this);
+            setService = new SetService();
         }
         return setService;
     }
 
     public SetRWService getRwSetService() {
         if(rwSetService == null){
-            rwSetService = new SetRWService(this);
+            rwSetService = new SetRWService();
         }
         return rwSetService;
     }
