@@ -143,7 +143,7 @@ public class AntidoteService {
 
     public MapAWService getMapAWService() {
         if(mapAWService == null){
-            mapAWService = new MapAWService(this);
+            mapAWService = new MapAWService();
         }
         return mapAWService;
     }
