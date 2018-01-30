@@ -38,13 +38,6 @@ public class AntidoteService {
 
     }
 
-    public String readRegisterInMap(String mapKeyId, String registerKeyId){
-        MapKey mapKey = Key.map_aw(mapKeyId);
-        RegisterKey<String> registerKey = Key.register(registerKeyId);
-        MapKey.MapReadResult mapReadResult = bucket.read(antidoteClient.noTransaction(), mapKey);
-        return mapReadResult.get(registerKey);
-    }
-
     public InteractiveTransaction startTransaction(){
         return antidoteClient.startTransaction();
     }
@@ -68,18 +61,6 @@ public class AntidoteService {
     public Object readKeyInMap(Key mapKey, Key elementKey) {
         MapKey.MapReadResult mapReadResult = (MapKey.MapReadResult) readByKey(mapKey);
         return mapReadResult.get(elementKey);
-    }
-
-    public String nextSessionId() {
-        return new BigInteger(130, random).toString(32);
-    }
-
-    public Bucket getBucket() {
-        return bucket;
-    }
-
-    public AntidoteClient getAntidoteClient() {
-        return antidoteClient;
     }
 
     public RegisterService getRegisterService(){
