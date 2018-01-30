@@ -24,6 +24,7 @@ public class AntidoteService {
     private CounterService counterService;
     private FatCounterService fatCounterService;
     private MapAWService mapAWService;
+    private MapRRService mapRRService;
 
     public AntidoteService(int node) {
 
@@ -139,5 +140,12 @@ public class AntidoteService {
             mapAWService = new MapAWService();
         }
         return mapAWService;
+    }
+
+    public MapRRService getMapRRService() {
+        if(mapRRService == null){
+            mapRRService = new MapRRService();
+        }
+        return mapRRService;
     }
 }

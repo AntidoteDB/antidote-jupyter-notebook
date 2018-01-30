@@ -185,6 +185,19 @@ abstract class BaseScript extends Script {
         return currentAntidote.getMapAWService().getKey(mapKey);
     }
 
+    //Map_RR Key
+    UpdateOp updateMapRR(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getMapRRService().updateMap(mapKey, update);
+    }
+
+    UpdateOp removeFromMapRR(MapKey mapKey, Key... key) {
+        return currentAntidote.getMapRRService().removeKey(mapKey, key);
+    }
+
+    MapKey getMapRRKey(String mapKey) {
+        return currentAntidote.getMapRRService().getKey(mapKey);
+    }
+
     String version() {
         String groovy = eu.antidote.jupyter.groovy.Version.getVersion()
         String antidote =  Version.getVersion()
