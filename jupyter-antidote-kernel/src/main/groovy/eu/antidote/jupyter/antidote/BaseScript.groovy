@@ -88,6 +88,10 @@ abstract class BaseScript extends Script {
         return currentAntidote.readByKey(key);
     }
 
+    Object readFromMap(Key mapKey, Key elementKey) {
+        return currentAntidote.readKeyInMap(mapKey, elementKey);
+    }
+
     //-----------------LWREGISTER METHODS----------------------------//
 
     RegisterKey<String> getLWRegisterKey(String keyid){
@@ -133,18 +137,6 @@ abstract class BaseScript extends Script {
         currentAntidote.getRwSetService().removeFromRWSet(setKey, values)
     }
 
-    String createAWMap(String mapId){
-        return currentAntidote.createAWMap(mapId)
-    }
-
-    String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
-        return currentAntidote.registerInMap(mapKeyId, registerKeyId, registerValue)
-    }
-
-    String readRegisterInMap(String mapId, String registerKeyId){
-        return currentAntidote.readRegisterInMap(mapId, registerKeyId)
-    }
-
     //IntegerKey
     UpdateOp assignInteger(IntegerKey integerKey, int value){
         return currentAntidote.getIntegerService().assignInteger(integerKey, value);
@@ -180,6 +172,19 @@ abstract class BaseScript extends Script {
         return currentAntidote.getFatCounterService().getKey(fatCounterKey);
     }
 
+    //Map_AW Key
+    UpdateOp updateMapAW(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getMapAWService().updateMap(mapKey, update);
+    }
+
+    UpdateOp removeFromMapAW(MapKey mapKey, Key... key) {
+        return currentAntidote.getMapAWService().removeKey(mapKey, key);
+    }
+
+    MapKey getMapAWKey(String mapKey) {
+        return currentAntidote.getMapAWService().getKey(mapKey);
+    }
+
     String version() {
         String groovy = eu.antidote.jupyter.groovy.Version.getVersion()
         String antidote =  Version.getVersion()
@@ -195,13 +200,4 @@ abstract class BaseScript extends Script {
         return uniqueID
     }
 
-
-    //Map_aw key
-    String readMapAW(String mapKey) {
-        return currentAntidote.getMapAWService().readMapAW(mapKey);
-    }
-
-    /*void updateMapAW(String mapKey, String elementKey) {
-        return antidote
-    }*/
 }

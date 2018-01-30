@@ -10,7 +10,7 @@ public class CounterService {
         return counterKey.increment(incrementValue);
     }
 
-    public Key getKey(String counterId){
+    public CounterKey getKey(String counterId){
         return Key.counter(counterId);
     }
 

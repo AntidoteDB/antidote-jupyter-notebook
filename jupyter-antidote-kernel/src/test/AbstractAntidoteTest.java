@@ -22,7 +22,7 @@ public class AbstractAntidoteTest {
 
     public AbstractAntidoteTest() {
 
-        antidoteService = new AntidoteService();
+        antidoteService = new AntidoteService(1);
     }
 
 
