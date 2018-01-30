@@ -25,7 +25,7 @@ public class MapRRServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testUpdateMapAW() {
+    public void testUpdateMapRR() {
 
         MapKey mapKey = map_service.getKey("key1");
         IntegerKey x_key = int_service.getKey("x");
@@ -39,7 +39,7 @@ public class MapRRServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testRemoveMapAW() {
+    public void testRemoveMapRR() {
 
         MapKey mapKey = map_service.getKey("key1");
         IntegerKey x_key = int_service.getKey("x");
@@ -53,7 +53,7 @@ public class MapRRServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testUpdatesMapAW() {
+    public void testUpdatesMapRR() {
 
         MapKey mapKey = map_service.getKey("key2");
         IntegerKey y_key = int_service.getKey("y");
@@ -73,7 +73,7 @@ public class MapRRServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testRemovesMapAW() {
+    public void testRemovesMapRR() {
 
         MapKey mapKey = map_service.getKey("key2");
         IntegerKey y_key = int_service.getKey("y");
@@ -90,7 +90,7 @@ public class MapRRServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testNotExistsMapAW() {
+    public void testNotExistsMapRR() {
 
         MapKey mapKey = map_service.getKey("key2");
         SetKey<String> notExistsSetKey = set_service.getKey("notExistsSet");
