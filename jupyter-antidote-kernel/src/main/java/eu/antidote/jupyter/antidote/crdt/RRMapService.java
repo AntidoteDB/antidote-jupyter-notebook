@@ -4,10 +4,7 @@ import eu.antidotedb.client.Key;
 import eu.antidotedb.client.MapKey;
 import eu.antidotedb.client.UpdateOp;
 
-import java.util.Arrays;
-import java.util.Map;
-
-public class MapAWService {
+public class RRMapService {
 
     public UpdateOp updateMap(MapKey mapKey, UpdateOp... updates) {
         return mapKey.update(updates);
@@ -18,7 +15,7 @@ public class MapAWService {
     }
 
     public MapKey getKey(String mapId){
-        return Key.map_aw(mapId);
+        return Key.map_rr(mapId);
     }
 
 }

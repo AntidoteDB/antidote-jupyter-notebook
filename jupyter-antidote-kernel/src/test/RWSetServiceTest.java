@@ -1,4 +1,4 @@
-import eu.antidote.jupyter.antidote.crdt.SetRWService;
+import eu.antidote.jupyter.antidote.crdt.RWSetService;
 import eu.antidotedb.client.SetKey;
 import org.junit.Test;
 
@@ -6,11 +6,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class SetRWServiceTest extends AbstractAntidoteTest{
-    private SetRWService service;
-    public SetRWServiceTest(){
+public class RWSetServiceTest extends AbstractAntidoteTest{
+    private RWSetService service;
+    public RWSetServiceTest(){
         super();
-        service = new SetRWService();
+        service = new RWSetService();
     }
 
     @Test

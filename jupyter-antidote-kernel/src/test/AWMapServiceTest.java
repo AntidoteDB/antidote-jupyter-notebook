@@ -1,6 +1,6 @@
 import eu.antidote.jupyter.antidote.crdt.CounterService;
 import eu.antidote.jupyter.antidote.crdt.IntegerService;
-import eu.antidote.jupyter.antidote.crdt.MapAWService;
+import eu.antidote.jupyter.antidote.crdt.AWMapService;
 import eu.antidote.jupyter.antidote.crdt.SetService;
 import eu.antidotedb.client.*;
 import org.junit.Test;
@@ -10,15 +10,15 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MapAWServiceTest extends AbstractAntidoteTest {
-    private MapAWService map_service;
+public class AWMapServiceTest extends AbstractAntidoteTest {
+    private AWMapService map_service;
     private IntegerService int_service;
     private CounterService counter_service;
     private SetService set_service;
 
-    public MapAWServiceTest() {
+    public AWMapServiceTest() {
         super();
-        map_service = new MapAWService();
+        map_service = new AWMapService();
         int_service = new IntegerService();
         counter_service = new CounterService();
         set_service = new SetService();

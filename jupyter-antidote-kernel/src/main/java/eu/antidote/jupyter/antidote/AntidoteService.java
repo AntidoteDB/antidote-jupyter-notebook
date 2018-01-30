@@ -20,11 +20,12 @@ public class AntidoteService {
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
     private SetService setService;
-    private SetRWService rwSetService;
+    private RWSetService rwSetService;
     private CounterService counterService;
     private FatCounterService fatCounterService;
-    private MapAWService mapAWService;
-    private MapRRService mapRRService;
+    private AWMapService AWMapService;
+    private RRMapService RRMapService;
+    private GMapService GMapService;
 
     public AntidoteService(int node) {
 
@@ -128,24 +129,31 @@ public class AntidoteService {
         return setService;
     }
 
-    public SetRWService getRwSetService() {
+    public RWSetService getRwSetService() {
         if(rwSetService == null){
-            rwSetService = new SetRWService();
+            rwSetService = new RWSetService();
         }
         return rwSetService;
     }
 
-    public MapAWService getMapAWService() {
-        if(mapAWService == null){
-            mapAWService = new MapAWService();
+    public AWMapService getAWMapService() {
+        if(AWMapService == null){
+            AWMapService = new AWMapService();
         }
-        return mapAWService;
+        return AWMapService;
     }
 
-    public MapRRService getMapRRService() {
-        if(mapRRService == null){
-            mapRRService = new MapRRService();
+    public RRMapService getRRMapService() {
+        if(RRMapService == null){
+            RRMapService = new RRMapService();
         }
-        return mapRRService;
+        return RRMapService;
+    }
+
+    public GMapService getGMapService() {
+        if(GMapService == null){
+            GMapService = new GMapService();
+        }
+        return GMapService;
     }
 }

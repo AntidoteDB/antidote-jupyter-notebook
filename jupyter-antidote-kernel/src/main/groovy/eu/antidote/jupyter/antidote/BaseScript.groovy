@@ -173,29 +173,38 @@ abstract class BaseScript extends Script {
     }
 
     //Map_AW Key
-    UpdateOp updateMapAW(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getMapAWService().updateMap(mapKey, update);
+    UpdateOp updateAWMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getAWMapService().updateMap(mapKey, update);
     }
 
-    UpdateOp removeFromMapAW(MapKey mapKey, Key... key) {
-        return currentAntidote.getMapAWService().removeKey(mapKey, key);
+    UpdateOp removeFromAWMap(MapKey mapKey, Key... key) {
+        return currentAntidote.getAWMapService().removeKey(mapKey, key);
     }
 
-    MapKey getMapAWKey(String mapKey) {
-        return currentAntidote.getMapAWService().getKey(mapKey);
+    MapKey getAWMapKey(String mapKey) {
+        return currentAntidote.getAWMapService().getKey(mapKey);
     }
 
     //Map_RR Key
-    UpdateOp updateMapRR(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getMapRRService().updateMap(mapKey, update);
+    UpdateOp updateRRMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getRRMapService().updateMap(mapKey, update);
     }
 
-    UpdateOp removeFromMapRR(MapKey mapKey, Key... key) {
-        return currentAntidote.getMapRRService().removeKey(mapKey, key);
+    UpdateOp removeFromRRMap(MapKey mapKey, Key... key) {
+        return currentAntidote.getRRMapService().removeKey(mapKey, key);
     }
 
-    MapKey getMapRRKey(String mapKey) {
-        return currentAntidote.getMapRRService().getKey(mapKey);
+    MapKey getRRMapKey(String mapKey) {
+        return currentAntidote.getRRMapService().getKey(mapKey);
+    }
+
+    //Map_G Key
+    UpdateOp updateGMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getGMapService().updateMap(mapKey, update);
+    }
+
+    MapKey getGMapKey(String mapKey) {
+        return currentAntidote.getGMapService().getKey(mapKey);
     }
 
     String version() {
