@@ -34,20 +34,25 @@ abstract class BaseScript extends Script {
     static AntidoteService antidote1
     static AntidoteService antidote2
     static AntidoteService currentAntidote
-    void init() {
+    String init() {
         antidote1 = new AntidoteService(1)
         currentAntidote = antidote1
+        return "Antidote session created. Connected to Antidote node 1."
     }
 
-    void switchAntidote(int node){
+    String switchAntidote(int node){
+        String session=""
+        String connected
         if(node == 1){
             currentAntidote = antidote1
         }else if(node == 2){
             if(antidote2 == null){
                 antidote2 = new AntidoteService(2)
+                session = "Antidote 2 session created."
             }
             currentAntidote = antidote2
         }
+        return session + "Connected to Antidote " + currentAntidote.nodeId
     }
 
     /**
@@ -72,20 +77,23 @@ abstract class BaseScript extends Script {
         return currentAntidote.startTransaction()
     }
 
-    void addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
+    String addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
         currentAntidote.addToTransaction(tx, updateOp)
+        return  "Update to key '" + updateOp.getKey().key.toString() + "' added to transaction."
     }
 
-    void commitTransaction(InteractiveTransaction tx){
+    String commitTransaction(InteractiveTransaction tx){
         currentAntidote.commitTransaction(tx)
+        return "Transaction committed on Antidote " + currentAntidote.nodeId
     }
 
-    void applyUpdate(UpdateOp updateOperation){
+    String applyUpdate(UpdateOp updateOperation){
         currentAntidote.applyUpdate(updateOperation)
+        return "Update to key '"+ updateOperation.getKey().key.toString() + "' applied."
     }
 
     Object read(Key key) {
-        return currentAntidote.readByKey(key);
+        return currentAntidote.readByKey(key)
     }
 
     //-----------------LWREGISTER METHODS----------------------------//

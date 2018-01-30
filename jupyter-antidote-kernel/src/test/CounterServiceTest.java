@@ -1,7 +1,7 @@
 import eu.antidote.jupyter.antidote.crdt.CounterService;
 import eu.antidotedb.client.CounterKey;
-import eu.antidotedb.client.Key;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 /**

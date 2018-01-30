@@ -17,7 +17,7 @@ public class RegisterServiceTest extends AbstractAntidoteTest{
     }
 
     @Test
-    public void testUpdateRegister(){
+    public void testUpdateRegister() {
         RegisterKey<String> registerKey = service.getKey("key1");
         UpdateOp registerUpdate = service.assignRegister(registerKey, "testValue");
         antidoteService.applyUpdate(registerUpdate);

@@ -5,17 +5,14 @@ import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AntidoteService {
 
     private AntidoteClient antidoteClient;
-    final private Bucket bucket;
-    final String bucketKey;
-    SecureRandom random;
+    int nodeId;
+    private Bucket bucket;
     private RegisterService registerService;
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
@@ -35,9 +32,7 @@ public class AntidoteService {
         }else if(node == 2){
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
         }
-        this.random = new SecureRandom();
-        this.bucketKey = nextSessionId();
-        this.bucket = Bucket.bucket(bucketKey);
+        this.bucket = Bucket.bucket("jupyterBucket");
 
     }
 
@@ -78,18 +73,6 @@ public class AntidoteService {
 
     public Object readByKey(Key key) {
         return bucket.read(antidoteClient.noTransaction(), key);
-    }
-
-    public String nextSessionId() {
-        return new BigInteger(130, random).toString(32);
-    }
-
-    public Bucket getBucket() {
-        return bucket;
-    }
-
-    public AntidoteClient getAntidoteClient() {
-        return antidoteClient;
     }
 
     public RegisterService getRegisterService(){
