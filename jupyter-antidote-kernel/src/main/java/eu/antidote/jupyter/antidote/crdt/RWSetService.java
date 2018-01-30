@@ -4,7 +4,7 @@ import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
 
-public class SetRWService {
+public class RWSetService {
 
     public UpdateOp addToRWSet(SetKey<String> setKey, String... values) {
         UpdateOp op;

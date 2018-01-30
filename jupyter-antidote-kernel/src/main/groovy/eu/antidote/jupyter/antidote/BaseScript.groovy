@@ -96,6 +96,10 @@ abstract class BaseScript extends Script {
         return currentAntidote.readByKey(key)
     }
 
+    Object readFromMap(Key mapKey, Key elementKey) {
+        return currentAntidote.readKeyInMap(mapKey, elementKey);
+    }
+
     //-----------------LWREGISTER METHODS----------------------------//
 
     RegisterKey<String> getLWRegisterKey(String keyid){
@@ -141,18 +145,6 @@ abstract class BaseScript extends Script {
         currentAntidote.getRwSetService().removeFromRWSet(setKey, values)
     }
 
-    String createAWMap(String mapId){
-        return currentAntidote.createAWMap(mapId)
-    }
-
-    String storeRegisterInMap(String mapKeyId, String registerKeyId, String registerValue){
-        return currentAntidote.registerInMap(mapKeyId, registerKeyId, registerValue)
-    }
-
-    String readRegisterInMap(String mapId, String registerKeyId){
-        return currentAntidote.readRegisterInMap(mapId, registerKeyId)
-    }
-
     //IntegerKey
     UpdateOp assignInteger(IntegerKey integerKey, int value){
         return currentAntidote.getIntegerService().assignInteger(integerKey, value);
@@ -188,6 +180,41 @@ abstract class BaseScript extends Script {
         return currentAntidote.getFatCounterService().getKey(fatCounterKey);
     }
 
+    //Map_AW Key
+    UpdateOp updateAWMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getAWMapService().updateMap(mapKey, update);
+    }
+
+    UpdateOp removeFromAWMap(MapKey mapKey, Key... key) {
+        return currentAntidote.getAWMapService().removeKey(mapKey, key);
+    }
+
+    MapKey getAWMapKey(String mapKey) {
+        return currentAntidote.getAWMapService().getKey(mapKey);
+    }
+
+    //Map_RR Key
+    UpdateOp updateRRMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getRRMapService().updateMap(mapKey, update);
+    }
+
+    UpdateOp removeFromRRMap(MapKey mapKey, Key... key) {
+        return currentAntidote.getRRMapService().removeKey(mapKey, key);
+    }
+
+    MapKey getRRMapKey(String mapKey) {
+        return currentAntidote.getRRMapService().getKey(mapKey);
+    }
+
+    //Map_G Key
+    UpdateOp updateGMap(MapKey mapKey, UpdateOp... update) {
+        return currentAntidote.getGMapService().updateMap(mapKey, update);
+    }
+
+    MapKey getGMapKey(String mapKey) {
+        return currentAntidote.getGMapService().getKey(mapKey);
+    }
+
     String version() {
         String groovy = eu.antidote.jupyter.groovy.Version.getVersion()
         String antidote =  Version.getVersion()
@@ -203,13 +230,4 @@ abstract class BaseScript extends Script {
         return uniqueID
     }
 
-
-    //Map_aw key
-    String readMapAW(String mapKey) {
-        return currentAntidote.getMapAWService().readMapAW(mapKey);
-    }
-
-    /*void updateMapAW(String mapKey, String elementKey) {
-        return antidote
-    }*/
 }

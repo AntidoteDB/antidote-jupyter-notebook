@@ -17,10 +17,12 @@ public class AntidoteService {
     private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
     private SetService setService;
-    private SetRWService rwSetService;
+    private RWSetService rwSetService;
     private CounterService counterService;
     private FatCounterService fatCounterService;
-    private MapAWService mapAWService;
+    private AWMapService AWMapService;
+    private RRMapService RRMapService;
+    private GMapService GMapService;
 
     public AntidoteService(int node) {
 
@@ -34,18 +36,6 @@ public class AntidoteService {
         }
         this.bucket = Bucket.bucket("jupyterBucket");
 
-    }
-
-    public String createAWMap(String mapId){
-        MapKey mapKey = Key.map_aw(mapId);
-        return mapKey.toString();
-    }
-
-    public String registerInMap(String mapKeyId, String registerKeyId, String registerValue){
-        MapKey mapKey = Key.map_aw(mapKeyId);
-        RegisterKey<String> registerKey = Key.register(registerKeyId);
-        bucket.update(antidoteClient.noTransaction(), mapKey.update(registerKey.assign(registerValue)));
-        return mapKey.toString();
     }
 
     public String readRegisterInMap(String mapKeyId, String registerKeyId){
@@ -73,6 +63,23 @@ public class AntidoteService {
 
     public Object readByKey(Key key) {
         return bucket.read(antidoteClient.noTransaction(), key);
+    }
+
+    public Object readKeyInMap(Key mapKey, Key elementKey) {
+        MapKey.MapReadResult mapReadResult = (MapKey.MapReadResult) readByKey(mapKey);
+        return mapReadResult.get(elementKey);
+    }
+
+    public String nextSessionId() {
+        return new BigInteger(130, random).toString(32);
+    }
+
+    public Bucket getBucket() {
+        return bucket;
+    }
+
+    public AntidoteClient getAntidoteClient() {
+        return antidoteClient;
     }
 
     public RegisterService getRegisterService(){
@@ -117,17 +124,31 @@ public class AntidoteService {
         return setService;
     }
 
-    public SetRWService getRwSetService() {
+    public RWSetService getRwSetService() {
         if(rwSetService == null){
-            rwSetService = new SetRWService();
+            rwSetService = new RWSetService();
         }
         return rwSetService;
     }
 
-    public MapAWService getMapAWService() {
-        if(mapAWService == null){
-            mapAWService = new MapAWService();
+    public AWMapService getAWMapService() {
+        if(AWMapService == null){
+            AWMapService = new AWMapService();
         }
-        return mapAWService;
+        return AWMapService;
+    }
+
+    public RRMapService getRRMapService() {
+        if(RRMapService == null){
+            RRMapService = new RRMapService();
+        }
+        return RRMapService;
+    }
+
+    public GMapService getGMapService() {
+        if(GMapService == null){
+            GMapService = new GMapService();
+        }
+        return GMapService;
     }
 }
