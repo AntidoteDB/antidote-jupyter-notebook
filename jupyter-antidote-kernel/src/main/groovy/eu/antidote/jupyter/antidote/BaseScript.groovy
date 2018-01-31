@@ -35,24 +35,32 @@ abstract class BaseScript extends Script {
     static AntidoteService antidote2
     static AntidoteService currentAntidote
     String init() {
-        antidote1 = new AntidoteService(1)
+        if(antidote1 == null){
+            antidote1 = new AntidoteService(1)
+        }
+        if(antidote2 == null){
+            antidote2 = new AntidoteService(2)
+        }
         currentAntidote = antidote1
         return "Antidote session created. Connected to Antidote node 1."
     }
 
     String switchAntidote(int node){
         String session=""
-        String connected
         if(node == 1){
+            if(antidote1 == null){
+                antidote1 = new AntidoteService(1)
+                session = "Antidote 2 session created. "
+            }
             currentAntidote = antidote1
         }else if(node == 2){
             if(antidote2 == null){
                 antidote2 = new AntidoteService(2)
-                session = "Antidote 2 session created."
+                session = "Antidote 2 session created. "
             }
             currentAntidote = antidote2
         }
-        return session + "Connected to Antidote " + currentAntidote.nodeId
+        return session + "Connected to Antidote " + node
     }
 
     /**
@@ -60,7 +68,7 @@ abstract class BaseScript extends Script {
      * executed in Antidote1
      */
     String connectAntidotes(){
-        Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 0%")
+        Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 0%")
         return "Connecting Antidote nodes."
     }
 
@@ -69,7 +77,7 @@ abstract class BaseScript extends Script {
      * executed in Antidote1
      */
     String disconnectAntidotes(){
-        Runtime.getRuntime().exec("docker exec antidote1 tc qdisc replace dev eth0 root netem loss 100%")
+        Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 100%")
         return "Disconnecting Antidote nodes."
     }
 

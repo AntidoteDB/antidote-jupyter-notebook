@@ -29,8 +29,9 @@ import org.lappsgrid.jupyter.groovy.GroovyKernel
 class AntidoteKernel extends GroovyKernel {
     public static String ANTIDOTE_HOST = "http://192.168.99.100:8087"
     public static String ANTIDOTE_IP = "192.168.99.100"
-    public static int ANTIDOTE1_PORT = 8087;
-    public static int ANTIDOTE2_PORT = 8088;
+    public static String ANTIDOTE1_IP = "antidote1"
+    public static String ANTIDOTE2_IP = "antidote2"
+    public static int ANTIDOTE_PORT = 8087
 
     public AntidoteKernel() {
         super(new AntidoteContext())

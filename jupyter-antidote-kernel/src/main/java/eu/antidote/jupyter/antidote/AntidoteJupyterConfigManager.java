@@ -8,13 +8,13 @@ public class AntidoteJupyterConfigManager {
 
     public List<InetSocketAddress> getAntidote1ConfigHosts() {
         List<InetSocketAddress> list = new LinkedList();
-        list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE_IP, AntidoteKernel.ANTIDOTE1_PORT));
+        list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE1_IP, AntidoteKernel.ANTIDOTE_PORT));
         return list;
     }
 
     public List<InetSocketAddress> getAntidote2ConfigHosts() {
         List<InetSocketAddress> list = new LinkedList();
-        list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE_IP, AntidoteKernel.ANTIDOTE2_PORT));
+        list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE2_IP, AntidoteKernel.ANTIDOTE_PORT));
         return list;
     }
 }
