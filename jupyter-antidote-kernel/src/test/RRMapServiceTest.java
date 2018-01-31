@@ -90,6 +90,22 @@ public class RRMapServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
+    public void testResetMapRR() {
+
+        MapKey mapKey = map_service.getKey("key3");
+        IntegerKey y_key = int_service.getKey("y");
+
+        InteractiveTransaction tx = antidoteService.startTransaction();
+        antidoteService.addToTransaction(tx, map_service.updateMap(mapKey, int_service.assignInteger(y_key, 1)));
+        antidoteService.addToTransaction(tx, map_service.updateMap(mapKey, map_service.reset(mapKey)));
+        antidoteService.commitTransaction(tx);
+
+        long readValue_y = (Long) antidoteService.readKeyInMap(mapKey, y_key);
+        assertEquals(0, readValue_y);
+
+    }
+
+    @Test
     public void testNotExistsMapRR() {
 
         MapKey mapKey = map_service.getKey("key2");

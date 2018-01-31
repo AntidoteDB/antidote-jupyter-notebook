@@ -17,4 +17,11 @@ public class AntidoteJupyterConfigManager {
         list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE2_IP, AntidoteKernel.ANTIDOTE_PORT));
         return list;
     }
+
+    public List<InetSocketAddress> getAntidoteLocalConfigHosts() {
+        List<InetSocketAddress> list = new LinkedList();
+        list.add(new InetSocketAddress(AntidoteKernel.ANTIDOTE_IP, AntidoteKernel.ANTIDOTE_PORT));
+        return list;
+    }
+
 }

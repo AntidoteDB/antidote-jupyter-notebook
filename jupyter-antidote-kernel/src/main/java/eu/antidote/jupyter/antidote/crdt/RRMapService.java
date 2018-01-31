@@ -14,6 +14,8 @@ public class RRMapService {
         return mapKey.removeKeys(removedKeys);
     }
 
+    public UpdateOp reset(MapKey mapKey) { return mapKey.reset(); }
+
     public MapKey getKey(String mapId){
         return Key.map_rr(mapId);
     }

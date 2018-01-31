@@ -21,7 +21,6 @@ import eu.antidotedb.client.*
 /**
  * Based on work of
  * @author Keith Suderman
- * TODO adapt to Antidote
  */
 abstract class BaseScript extends Script {
 
@@ -208,6 +207,10 @@ abstract class BaseScript extends Script {
 
     UpdateOp removeFromRRMap(MapKey mapKey, Key... key) {
         return currentAntidote.getRRMapService().removeKey(mapKey, key);
+    }
+
+    UpdateOp resetRRMap(MapKey mapKey) {
+        return currentAntidote.getRRMapService().reset(mapKey);
     }
 
     MapKey getRRMapKey(String mapKey) {

@@ -33,6 +33,8 @@ public class AntidoteService {
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote1ConfigHosts());
         }else if(node == 2){
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidote2ConfigHosts());
+        }else {
+            this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidoteLocalConfigHosts());
         }
         this.bucket = Bucket.bucket("jupyterBucket");
 
