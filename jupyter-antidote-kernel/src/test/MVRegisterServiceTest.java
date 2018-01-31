@@ -18,7 +18,7 @@ public class MVRegisterServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testUpdateRegister(){
-        MVRegisterKey<String> mvRegisterKey = service.getKey("key1");
+        MVRegisterKey<String> mvRegisterKey = service.getKey("mvregkey1");
         UpdateOp update = service.assignRegister(mvRegisterKey, "testValue");
         antidoteService.applyUpdate(update);
         List<String> readValue = (List<String>) antidoteService.readByKey(mvRegisterKey);
@@ -28,8 +28,8 @@ public class MVRegisterServiceTest extends AbstractAntidoteTest{
     @Ignore("Needs to be done with concurrent databases")
     @Test
     public void testUpdateMultiValue(){
-        MVRegisterKey<String> mvRegisterKey1 = service.getKey("key1");
-        MVRegisterKey<String> mvRegisterKey2 = service.getKey("key2");
+        MVRegisterKey<String> mvRegisterKey1 = service.getKey("mvregkey1");
+        MVRegisterKey<String> mvRegisterKey2 = service.getKey("mvregkey2");
         service.assignRegister(mvRegisterKey1, "testValue1");
         service.assignRegister(mvRegisterKey2, "testValue2");
 

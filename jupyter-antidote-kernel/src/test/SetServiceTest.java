@@ -16,7 +16,7 @@ public class SetServiceTest extends AbstractAntidoteTest {
 
     @Test
     public void testAddOneValueToSet(){
-        SetKey<String> setKey = service.getKey("key1");
+        SetKey<String> setKey = service.getKey("setkey1");
         UpdateOp updateOp=service.addToSet(setKey, "testval");
         antidoteService.applyUpdate(updateOp);
 
@@ -26,7 +26,7 @@ public class SetServiceTest extends AbstractAntidoteTest {
 
     @Test
     public void testAddValuesToSet(){
-        SetKey<String> setKey = service.getKey("key2");
+        SetKey<String> setKey = service.getKey("setkey2");
         antidoteService.applyUpdate(service.addToSet(setKey, "testval1", "testval2"));
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
         assertEquals(2, readValues.size());
@@ -36,7 +36,7 @@ public class SetServiceTest extends AbstractAntidoteTest {
     @Test
     public void testRemoveValueFromSet(){
 
-        SetKey<String> setKey = service.getKey("key3");
+        SetKey<String> setKey = service.getKey("setkey3");
         antidoteService.applyUpdate(service.addToSet(setKey, "testval1", "testval2"));
         antidoteService.applyUpdate(service.removeFromSet(setKey, "testval2"));
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
@@ -47,12 +47,23 @@ public class SetServiceTest extends AbstractAntidoteTest {
 
     @Test
     public void testRemoveValuesFromSet(){
-        SetKey<String> setKey = service.getKey("key4");
+        SetKey<String> setKey = service.getKey("setkey4");
         antidoteService.applyUpdate(service.addToSet(setKey, "testval1", "testval2", "testval3"));
         antidoteService.applyUpdate(service.removeFromSet(setKey, "testval1", "testval3"));
 
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
         assertEquals(1, readValues.size());
         assertEquals("testval2", readValues.get(0));
+    }
+
+    @Test
+    public void testResetSet(){
+        SetKey<String> setKey = service.getKey("setkey5");
+        antidoteService.applyUpdate(service.addToSet(setKey, "testval1", "testval2", "testval3"));
+        antidoteService.applyUpdate(service.resetSet(setKey));
+
+        List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
+        assertEquals(0, readValues.size());
+
     }
 }

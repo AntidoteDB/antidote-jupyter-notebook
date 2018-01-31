@@ -33,12 +33,15 @@ abstract class BaseScript extends Script {
     static AntidoteService antidote1
     static AntidoteService antidote2
     static AntidoteService currentAntidote
+    static String sessionId;
+
     String init() {
+        sessionId = generateId();
         if(antidote1 == null){
-            antidote1 = new AntidoteService(1)
+            antidote1 = new AntidoteService(1, sessionId)
         }
         if(antidote2 == null){
-            antidote2 = new AntidoteService(2)
+            antidote2 = new AntidoteService(2, sessionId)
         }
         currentAntidote = antidote1
         return "Antidote session created. Connected to Antidote node 1."
@@ -48,13 +51,13 @@ abstract class BaseScript extends Script {
         String session=""
         if(node == 1){
             if(antidote1 == null){
-                antidote1 = new AntidoteService(1)
+                antidote1 = new AntidoteService(1, sessionId)
                 session = "Antidote 2 session created. "
             }
             currentAntidote = antidote1
         }else if(node == 2){
             if(antidote2 == null){
-                antidote2 = new AntidoteService(2)
+                antidote2 = new AntidoteService(2, sessionId)
                 session = "Antidote 2 session created. "
             }
             currentAntidote = antidote2

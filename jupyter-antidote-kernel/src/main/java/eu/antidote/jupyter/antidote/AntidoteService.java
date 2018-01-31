@@ -24,7 +24,7 @@ public class AntidoteService {
     private RRMapService RRMapService;
     private GMapService GMapService;
 
-    public AntidoteService(int node) {
+    public AntidoteService(int node, String buckerKey) {
 
         List<TransformerFactory> transformers = new ArrayList();
         transformers.add(new CountingTransformer());
@@ -36,7 +36,7 @@ public class AntidoteService {
         }else {
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidoteLocalConfigHosts());
         }
-        this.bucket = Bucket.bucket("jupyterBucket");
+        this.bucket = Bucket.bucket(buckerKey);
 
     }
 

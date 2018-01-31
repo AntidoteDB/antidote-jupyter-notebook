@@ -15,14 +15,14 @@ public class RWSetServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testAddOneValueToRWSet(){
-        SetKey<String> setKey = service.getKey("key1");
+        SetKey<String> setKey = service.getKey("rwsetkey1");
         antidoteService.applyUpdate(service.addToRWSet(setKey, "testval"));
         assertEquals("testval", ((List<String>)antidoteService.readByKey(setKey)).get(0));
     }
 
     @Test
     public void testAddValuesToRWSet(){
-        SetKey<String> setKey = service.getKey("key2");
+        SetKey<String> setKey = service.getKey("rwsetkey2");
         antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2"));
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
         assertEquals(2, readValues.size());
@@ -31,7 +31,7 @@ public class RWSetServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testRemoveValueFromRWSet(){
-        SetKey<String> setKey = service.getKey("key3");
+        SetKey<String> setKey = service.getKey("rwsetkey3");
         antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2"));
         antidoteService.applyUpdate(service.removeFromRWSet(setKey, "testval2"));
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
@@ -41,7 +41,7 @@ public class RWSetServiceTest extends AbstractAntidoteTest{
 
     @Test
     public void testRemoveValuesFromRWSet(){
-        SetKey<String> setKey = service.getKey("key4");
+        SetKey<String> setKey = service.getKey("rwsetkey4");
         antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2", "testval3"));
         antidoteService.applyUpdate(service.removeFromRWSet(setKey, "testval1", "testval3"));
         List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
