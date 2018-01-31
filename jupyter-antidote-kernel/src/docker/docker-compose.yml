@@ -29,7 +29,7 @@ services:
       - local2
 
   antidote-notebook:
-    image: jirijira/antidotenb:latest
+    image: antidotedb/notebook:latest
     container_name: antidote_notebook
     ports:
       - "8089:8888"
