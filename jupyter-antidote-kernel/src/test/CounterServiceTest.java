@@ -19,7 +19,7 @@ public class CounterServiceTest extends AbstractAntidoteTest{
     @Test
     public void testIncrementInteger() {
 
-        CounterKey key1 = (CounterKey)service.getKey("key1");
+        CounterKey key1 = (CounterKey)service.getKey("counter_test_key1");
         antidoteService.applyUpdate(service.incrementCounter(key1, 1));
         antidoteService.applyUpdate(service.incrementCounter(key1, 2));
 

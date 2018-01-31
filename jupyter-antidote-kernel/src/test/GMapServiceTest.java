@@ -25,25 +25,11 @@ public class GMapServiceTest extends AbstractAntidoteTest {
     }
 
     @Test
-    public void testUpdateMapG() {
-
-        MapKey mapKey = map_service.getKey("key1");
-        IntegerKey x_key = int_service.getKey("x");
-
-        UpdateOp update = map_service.updateMap(mapKey, int_service.assignInteger(x_key, 1));
-        antidoteService.applyUpdate(update);
-
-        long readValue = (Long) antidoteService.readKeyInMap(mapKey, x_key);
-        assertEquals(1, readValue);
-
-    }
-
-    @Test
     public void testUpdatesMapG() {
 
-        MapKey mapKey = map_service.getKey("key2");
-        IntegerKey y_key = int_service.getKey("y");
-        CounterKey z_key = counter_service.getKey("z");
+        MapKey mapKey = map_service.getKey("map_g_test_update_map_key");
+        IntegerKey y_key = int_service.getKey("map_g_test_update_y");
+        CounterKey z_key = counter_service.getKey("map_g_test_update_z");
 
         UpdateOp update = map_service.updateMap(mapKey, int_service.assignInteger(y_key, 1),
                                                         counter_service.incrementCounter(z_key,3));
@@ -55,17 +41,6 @@ public class GMapServiceTest extends AbstractAntidoteTest {
 
         int readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, z_key);
         assertEquals(3, readValue_z);
-
-    }
-
-    @Test
-    public void testNotExistsMapG() {
-
-        MapKey mapKey = map_service.getKey("key2");
-        SetKey<String> notExistsSetKey = set_service.getKey("notExistsSet");
-
-        List<String> res1 = (List<String>) antidoteService.readKeyInMap(mapKey, notExistsSetKey);
-        assertEquals(Collections.emptyList(), res1);
 
     }
 

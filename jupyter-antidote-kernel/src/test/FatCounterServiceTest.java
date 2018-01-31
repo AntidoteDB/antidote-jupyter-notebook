@@ -19,7 +19,7 @@ public class FatCounterServiceTest extends AbstractAntidoteTest{
     @Test
     public void testIncrementInteger() {
 
-        CounterKey key1 = (CounterKey)service.getKey("key1");
+        CounterKey key1 = (CounterKey)service.getKey("fatcounter_test_key1");
         antidoteService.applyUpdate(service.incrementFatCounter(key1, 1));
         antidoteService.applyUpdate(service.incrementFatCounter(key1, 2));
 
@@ -30,7 +30,7 @@ public class FatCounterServiceTest extends AbstractAntidoteTest{
     @Test
     public void testResetInteger() {
 
-        CounterKey key1 = (CounterKey)service.getKey("key1");
+        CounterKey key1 = (CounterKey)service.getKey("fatcounter_test_key1");
         antidoteService.applyUpdate(service.resetFatCounter(key1));
 
         int readValue = (Integer) antidoteService.readByKey(key1);
