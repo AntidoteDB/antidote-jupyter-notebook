@@ -11,3 +11,4 @@
 .gitignore text
 *.md text
 *.sh text eol=lf
+*.erl text eol=lf
