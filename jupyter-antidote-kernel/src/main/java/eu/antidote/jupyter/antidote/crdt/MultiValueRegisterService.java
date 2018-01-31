@@ -13,4 +13,8 @@ public class MultiValueRegisterService {
     public MVRegisterKey<String> getKey(String keyId){
         return Key.multiValueRegister(keyId);
     }
+
+    public UpdateOp resetMVRegister(MVRegisterKey<String> registerKey){
+        return registerKey.reset();
+    }
 }

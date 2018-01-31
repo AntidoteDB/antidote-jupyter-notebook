@@ -31,4 +31,8 @@ public class SetService {
         return setUpdate;
     }
 
+    public UpdateOp resetSet(SetKey<String> setKey){
+        return setKey.reset();
+    }
+
 }

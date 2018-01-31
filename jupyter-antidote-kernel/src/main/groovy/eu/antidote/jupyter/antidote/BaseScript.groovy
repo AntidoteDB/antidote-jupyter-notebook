@@ -127,6 +127,10 @@ abstract class BaseScript extends Script {
         return currentAntidote.getMvRegisterService().assignRegister(registerKey, value)
     }
 
+    UpdateOp resetMVRegister(MVRegisterKey<String> registerKey){
+        return currentAntidote.getMvRegisterService().resetMVRegister(registerKey)
+    }
+
     //-----------------SET------------------------------------------//
     SetKey<String> getSetKey(String keyId){
         return currentAntidote.getSetService().getKey(keyId)
@@ -138,6 +142,10 @@ abstract class BaseScript extends Script {
 
     UpdateOp removeFromSet(SetKey<String> setKey, String... values){
         return currentAntidote.getSetService().removeFromSet(setKey, values)
+    }
+
+    UpdateOp resetSet(SetKey<String> setKey){
+        return currentAntidote.getSetService().resetSet(setKey)
     }
 
     //-----------------RWSET------------------------------------------//
