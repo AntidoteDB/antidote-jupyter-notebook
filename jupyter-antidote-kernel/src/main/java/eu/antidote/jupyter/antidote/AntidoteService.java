@@ -11,7 +11,7 @@ import java.util.List;
 public class AntidoteService {
 
     private AntidoteClient antidoteClient;
-    int nodeId;
+    final int nodeId;
     private Bucket bucket;
     private RegisterService registerService;
     private IntegerService integerService;
@@ -25,7 +25,7 @@ public class AntidoteService {
     private GMapService GMapService;
 
     public AntidoteService(int node, String buckerKey) {
-
+        nodeId = node;
         List<TransformerFactory> transformers = new ArrayList();
         transformers.add(new CountingTransformer());
         AntidoteJupyterConfigManager antidoteJupyterConfigManager = new AntidoteJupyterConfigManager();

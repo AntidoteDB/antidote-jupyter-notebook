@@ -18,6 +18,10 @@
 package eu.antidote.jupyter.antidote
 
 import eu.antidotedb.client.*
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 /**
  * Based on work of
  * @author Keith Suderman
@@ -33,18 +37,15 @@ abstract class BaseScript extends Script {
     static AntidoteService antidote1
     static AntidoteService antidote2
     static AntidoteService currentAntidote
-    static String sessionId;
+    static String sessionId
 
     String init() {
         sessionId = generateId();
         if(antidote1 == null){
             antidote1 = new AntidoteService(1, sessionId)
         }
-        if(antidote2 == null){
-            antidote2 = new AntidoteService(2, sessionId)
-        }
         currentAntidote = antidote1
-        return "Antidote session created. Connected to Antidote node 1."
+        return formattedTimestamp()+ " Antidote session created. Connected to Antidote node 1."
     }
 
     String switchAntidote(int node){
@@ -52,17 +53,17 @@ abstract class BaseScript extends Script {
         if(node == 1){
             if(antidote1 == null){
                 antidote1 = new AntidoteService(1, sessionId)
-                session = "Antidote 2 session created. "
+                session = " Antidote 1 session created. "
             }
             currentAntidote = antidote1
         }else if(node == 2){
             if(antidote2 == null){
                 antidote2 = new AntidoteService(2, sessionId)
-                session = "Antidote 2 session created. "
+                session = " Antidote 2 session created. "
             }
             currentAntidote = antidote2
         }
-        return session + "Connected to Antidote " + node
+        return formattedTimestamp()+ session + " Connected to Antidote " + node +"."
     }
 
     /**
@@ -71,7 +72,7 @@ abstract class BaseScript extends Script {
      */
     String connectAntidotes(){
         Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 0%")
-        return "Connecting Antidote nodes."
+        return formattedTimestamp()+ " Connecting Antidote nodes."
     }
 
     /**
@@ -80,7 +81,7 @@ abstract class BaseScript extends Script {
      */
     String disconnectAntidotes(){
         Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 100%")
-        return "Disconnecting Antidote nodes."
+        return formattedTimestamp()+ " Disconnecting Antidote nodes."
     }
 
     AntidoteTransaction startTransaction(){
@@ -89,17 +90,17 @@ abstract class BaseScript extends Script {
 
     String addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
         currentAntidote.addToTransaction(tx, updateOp)
-        return  "Update to key '" + updateOp.getKey().key.toString() + "' added to transaction."
+        return  formattedTimestamp()+ " Update to key '" + updateOp.getKey().key.toString() + "' added to transaction."
     }
 
     String commitTransaction(InteractiveTransaction tx){
         currentAntidote.commitTransaction(tx)
-        return "Transaction committed on Antidote " + currentAntidote.nodeId
+        return formattedTimestamp()+ " Transaction committed on Antidote " + currentAntidote.nodeId
     }
 
     String applyUpdate(UpdateOp updateOperation){
         currentAntidote.applyUpdate(updateOperation)
-        return "Update to key '"+ updateOperation.getKey().key.toString() + "' applied."
+        return formattedTimestamp()+ " Update to key '"+ updateOperation.getKey().key.toString() + "' applied."
     }
 
     Object read(Key key) {
@@ -161,6 +162,10 @@ abstract class BaseScript extends Script {
 
     UpdateOp removeFromRWSet(SetKey<String> setKey, String... values){
         currentAntidote.getRwSetService().removeFromRWSet(setKey, values)
+    }
+
+    UpdateOp resetRWSet(SetKey<String> setKey){
+        currentAntidote.getRwSetService().resetRWSet(setKey);
     }
 
     //IntegerKey
@@ -250,6 +255,12 @@ abstract class BaseScript extends Script {
     String generateId() {
         String uniqueID = UUID.randomUUID().toString()
         return uniqueID
+    }
+
+    String formattedTimestamp(){
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss")
+        Date date = new Date()
+        return dateFormat.format(date)
     }
 
 }

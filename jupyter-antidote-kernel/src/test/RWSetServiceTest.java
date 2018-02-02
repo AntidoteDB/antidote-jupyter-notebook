@@ -49,4 +49,15 @@ public class RWSetServiceTest extends AbstractAntidoteTest{
         assertEquals(1, readValues.size());
         assertEquals("testval2", readValues.get(0));
     }
+
+    @Test
+    public void testResetSet(){
+        SetKey<String> setKey = service.getKey("rwSetKey5");
+        antidoteService.applyUpdate(service.addToRWSet(setKey, "testval1", "testval2", "testval3"));
+        antidoteService.applyUpdate(service.resetRWSet(setKey));
+
+        List<String> readValues = (List<String>) antidoteService.readByKey(setKey);
+        assertEquals(0, readValues.size());
+
+    }
 }
