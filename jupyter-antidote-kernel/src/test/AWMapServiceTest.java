@@ -55,11 +55,8 @@ public class AWMapServiceTest extends AbstractAntidoteTest {
                 counter_service.incrementCounter(z_key,3)));
         antidoteService.applyUpdate(map_service.removeKey(mapKey, y_key, z_key));
 
-        long readValue_y = (Long) antidoteService.readKeyInMap(mapKey, y_key);
-        assertEquals(0, readValue_y);
-
-        int readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, z_key);
-        assertEquals(0, readValue_z);
+        MapKey.MapReadResult readValue_map = (MapKey.MapReadResult) antidoteService.readByKey(mapKey);
+        assertEquals(0, readValue_map.size());
     }
 
 }

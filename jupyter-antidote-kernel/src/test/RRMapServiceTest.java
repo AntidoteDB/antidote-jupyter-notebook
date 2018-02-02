@@ -12,6 +12,7 @@ public class RRMapServiceTest extends AbstractAntidoteTest {
     private RRMapService map_service;
     private IntegerService int_service;
     private CounterService counter_service;
+    private FatCounterService fatcounter_service;
     private SetService set_service;
     private RegisterService register_service;
 
@@ -20,6 +21,7 @@ public class RRMapServiceTest extends AbstractAntidoteTest {
         map_service = new RRMapService();
         int_service = new IntegerService();
         counter_service = new CounterService();
+        fatcounter_service = new FatCounterService();
         set_service = new SetService();
         register_service = new RegisterService();
     }
@@ -48,25 +50,24 @@ public class RRMapServiceTest extends AbstractAntidoteTest {
     public void testRemovesMapRR() {
 
         MapKey mapKey = map_service.getKey("map_rr_test_removes_map_key");
-        RegisterKey y_key = register_service.getKey("map_rr_test_removes_y_key");
-        CounterKey z_key = counter_service.getKey("map_rr_test_removes_z_key");
+        CounterKey x_key = fatcounter_service.getKey("map_rr_test_removes_x_key");
+        CounterKey y_key = fatcounter_service.getKey("map_rr_test_removes_y_key");
 
-        antidoteService.applyUpdate(map_service.updateMap(mapKey, register_service.assignRegister(y_key, "Hello"),
-                                                                counter_service.incrementCounter(z_key,3)));
+        antidoteService.applyUpdate(map_service.updateMap(mapKey, fatcounter_service.incrementFatCounter(x_key,1),
+                                                                fatcounter_service.incrementFatCounter(y_key,2)));
 
-        String readValue_y = (String) antidoteService.readKeyInMap(mapKey, y_key);
-        assertEquals("Hello", readValue_y);
+        int readValue_y = (Integer) antidoteService.readKeyInMap(mapKey, x_key);
+        assertEquals(1, readValue_y);
 
-        int readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, z_key);
-        assertEquals(3, readValue_z);
+        int readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, y_key);
+        assertEquals(2, readValue_z);
 
+        antidoteService.applyUpdate(map_service.updateMap(mapKey, fatcounter_service.resetFatCounter(y_key)));
+        antidoteService.applyUpdate(map_service.removeKey(mapKey, x_key));
         antidoteService.applyUpdate(map_service.removeKey(mapKey, y_key));
 
-        readValue_y = (String) antidoteService.readKeyInMap(mapKey, y_key);
-        assertEquals(null, readValue_y);
-
-        readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, z_key);
-        assertEquals(3, readValue_z);
+        MapKey.MapReadResult readValue_map = (MapKey.MapReadResult) antidoteService.readByKey(mapKey);
+        assertEquals(1, readValue_map.size());
     }
 
     @Test

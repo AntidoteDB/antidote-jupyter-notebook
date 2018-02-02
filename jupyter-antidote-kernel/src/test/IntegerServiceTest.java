@@ -18,21 +18,21 @@ public class IntegerServiceTest extends AbstractAntidoteTest{
     @Test
     public void testAssignInteger(){
 
-        IntegerKey key1 = (IntegerKey)service.getKey("integer_test_key1");
-        antidoteService.applyUpdate(service.assignInteger(key1, 1));
+        IntegerKey key = (IntegerKey)service.getKey("integer_test_assign_key");
+        antidoteService.applyUpdate(service.assignInteger(key, 1));
 
-        long readValue = (Long) antidoteService.readByKey(key1);
+        long readValue = (Long) antidoteService.readByKey(key);
         assertEquals(1, readValue);
     }
 
     @Test
     public void testIncrementInteger() {
 
-        IntegerKey key2 = (IntegerKey)service.getKey("integer_test_key2");
-        antidoteService.applyUpdate(service.assignInteger(key2, 1));
-        antidoteService.applyUpdate(service.incrementInteger(key2, 3));
+        IntegerKey key = (IntegerKey)service.getKey("integer_test_increment_key");
+        antidoteService.applyUpdate(service.assignInteger(key, 1));
+        antidoteService.applyUpdate(service.incrementInteger(key, 3));
 
-        long readValue = (Long) antidoteService.readByKey(key2);
+        long readValue = (Long) antidoteService.readByKey(key);
         assertEquals(4, readValue);
     }
 
