@@ -89,7 +89,7 @@ abstract class BaseScript extends Script {
 
     String addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
         currentAntidote.addToTransaction(tx, updateOp)
-        return  "Update to key '" + updateOp.getKey().key.toString() + "' added to transaction."
+        return  "Added key '" + updateOp.getKey() + "' to transaction"
     }
 
     String commitTransaction(InteractiveTransaction tx){
@@ -99,7 +99,7 @@ abstract class BaseScript extends Script {
 
     String applyUpdate(UpdateOp updateOperation){
         currentAntidote.applyUpdate(updateOperation)
-        return "Update to key '"+ updateOperation.getKey().key.toString() + "' applied."
+        return "Updated key '"+ updateOperation.getKey() + "' on Antidote "+ currentAntidote.nodeId
     }
 
     Object read(Key key) {
