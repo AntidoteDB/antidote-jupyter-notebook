@@ -29,4 +29,8 @@ public class RWSetService {
         }
         return op;
     }
+
+    public UpdateOp resetRWSet(SetKey<String> setKey){
+        return setKey.reset();
+    }
 }
