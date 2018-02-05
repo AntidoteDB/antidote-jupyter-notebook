@@ -14,14 +14,12 @@ public class GMapServiceTest extends AbstractAntidoteTest {
     private GMapService map_service;
     private IntegerService int_service;
     private CounterService counter_service;
-    private SetService set_service;
 
     public GMapServiceTest() {
         super();
         map_service = new GMapService();
         int_service = new IntegerService();
         counter_service = new CounterService();
-        set_service = new SetService();
     }
 
     @Test
