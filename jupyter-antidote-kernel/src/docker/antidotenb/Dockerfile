@@ -10,6 +10,7 @@ COPY jupyter-antidote-kernel.jar /jupyter/jupyter-antidote-kernel.jar
 COPY kernel.json /jupyter/antidote/kernel.json
 RUN jupyter kernelspec install --name Antidote /jupyter/antidote
 
+COPY ./images ./images
 COPY ["./Welcome to Antidote.ipynb", "./Welcome to Antidote.ipynb"]
 
 #VOLUME ["/home/jovyan/work"]
