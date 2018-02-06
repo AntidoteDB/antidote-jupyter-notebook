@@ -257,7 +257,7 @@ abstract class BaseScript extends Script {
         return uniqueID
     }
 
-    String formattedTimestamp(){
+    private String formattedTimestamp(){
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss")
         Date date = new Date()
         return dateFormat.format(date)
