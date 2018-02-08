@@ -170,15 +170,15 @@ abstract class BaseScript extends Script {
 
     //IntegerKey
     UpdateOp assignInteger(IntegerKey integerKey, int value){
-        return currentAntidote.getIntegerService().assignInteger(integerKey, value);
+        return currentAntidote.getIntegerService().assignInteger(integerKey, value)
     }
 
     UpdateOp incrementInteger(IntegerKey integerKey, int incrementValue){
-        return currentAntidote.getIntegerService().incrementInteger(integerKey, incrementValue);
+        return currentAntidote.getIntegerService().incrementInteger(integerKey, incrementValue)
     }
 
     IntegerKey getIntegerKey(String integerKey){
-        return currentAntidote.getIntegerService().getKey(integerKey);
+        return currentAntidote.getIntegerService().getKey(integerKey)
     }
 
     //CounterKey

@@ -23,11 +23,9 @@ import org.lappsgrid.jupyter.groovy.GroovyKernel
 /** A Jupyter kernel for Antidote DB
  * Based on
  * @author Keith Suderman
- * TODO adapt to Antidote
  */
 @Slf4j('logger')
 class AntidoteKernel extends GroovyKernel {
-    public static String ANTIDOTE_HOST = "http://192.168.99.100:8087"
     public static String ANTIDOTE_IP = "192.168.99.100"
     public static String ANTIDOTE1_IP = "antidote1"
     public static String ANTIDOTE2_IP = "antidote2"
@@ -46,7 +44,7 @@ class AntidoteKernel extends GroovyKernel {
                         name: 'Antidote',
                         version: '0.1.0',
                         mimetype: '',
-                        file_extension: '.lsd',
+                        file_extension: '.anb',
                         pygments_lexer: '',
                         codemirror_mode: '',
                         nbconverter_exporter: ''
