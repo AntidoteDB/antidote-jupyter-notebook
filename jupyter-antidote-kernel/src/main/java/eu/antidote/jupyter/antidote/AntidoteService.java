@@ -44,7 +44,7 @@ public class AntidoteService {
         return antidoteClient.startTransaction();
     }
 
-    public void addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
+    public void applyUpdate(InteractiveTransaction tx, UpdateOp updateOp){
         bucket.update(tx, updateOp);
     }
 
@@ -58,6 +58,10 @@ public class AntidoteService {
 
     public Object readByKey(Key key) {
         return bucket.read(antidoteClient.noTransaction(), key);
+    }
+
+    public Object readInTransaction(InteractiveTransaction tx, Key key) {
+        return bucket.read(tx, key);
     }
 
     public Object readKeyInMap(Key mapKey, Key elementKey) {

@@ -88,9 +88,9 @@ abstract class BaseScript extends Script {
         return currentAntidote.startTransaction()
     }
 
-    String addToTransaction(InteractiveTransaction tx, UpdateOp updateOp){
-        currentAntidote.addToTransaction(tx, updateOp)
-        return  formattedTimestamp()+ " Added key '" + updateOp.getKey() + "' to transaction"
+    String applyUpdateWithTransaction(InteractiveTransaction tx, UpdateOp updateOp){
+        currentAntidote.applyUpdate(tx, updateOp)
+        return  formattedTimestamp()+ " updated key '" + updateOp.getKey() + "' with transaction on Antidote " + currentAntidote.nodeId
     }
 
     String commitTransaction(InteractiveTransaction tx){
@@ -105,6 +105,10 @@ abstract class BaseScript extends Script {
 
     Object read(Key key) {
         return currentAntidote.readByKey(key)
+    }
+
+    Object readInTransaction(InteractiveTransaction tx, Key key) {
+        return currentAntidote.readInTransaction(tx, key);
     }
 
     Object readFromMap(Key mapKey, Key elementKey) {
