@@ -1,12 +1,11 @@
 import eu.antidote.jupyter.antidote.crdt.CounterService;
-import eu.antidote.jupyter.antidote.crdt.IntegerService;
 import eu.antidote.jupyter.antidote.crdt.GMapService;
-import eu.antidote.jupyter.antidote.crdt.SetService;
-import eu.antidotedb.client.*;
+import eu.antidote.jupyter.antidote.crdt.IntegerService;
+import eu.antidotedb.client.CounterKey;
+import eu.antidotedb.client.IntegerKey;
+import eu.antidotedb.client.MapKey;
+import eu.antidotedb.client.UpdateOp;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,5 +42,19 @@ public class GMapServiceTest extends AbstractAntidoteTest {
     }
 
 
+    @Test
+    public void testMapInMap(){
+        MapKey mapKeyParent = map_service.getKey("map_g_parent_mapkey");
+        MapKey mapKeyChild = map_service.getKey("map_g_child_mapkey");
+        IntegerKey int_key = int_service.getKey("map_g_int_in_child_key");
+        UpdateOp update = map_service.updateMap(mapKeyParent, map_service.updateMap(mapKeyChild,
+                int_service.assignInteger(int_key, 42)));
+
+        antidoteService.applyUpdate(update);
+        MapKey.MapReadResult a = (MapKey.MapReadResult) antidoteService.readKeyInMap(mapKeyParent, mapKeyChild);
+        long intVal =(Long) antidoteService.readKeyInMapResult(a, int_key);
+
+        assertEquals(42, intVal);
+    }
 }
 

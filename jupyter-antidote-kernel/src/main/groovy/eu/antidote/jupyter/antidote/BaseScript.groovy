@@ -108,11 +108,15 @@ abstract class BaseScript extends Script {
     }
 
     Object readInTransaction(InteractiveTransaction tx, Key key) {
-        return currentAntidote.readInTransaction(tx, key);
+        return currentAntidote.readInTransaction(tx, key)
     }
 
     Object readFromMap(Key mapKey, Key elementKey) {
-        return currentAntidote.readKeyInMap(mapKey, elementKey);
+        return currentAntidote.readKeyInMap(mapKey, elementKey)
+    }
+
+    Object readFromMapResult(MapKey.MapReadResult mapResult, Key elementKey){
+        return currentAntidote.readKeyInMapResult(mapResult, elementKey)
     }
 
     //-----------------LWREGISTER METHODS----------------------------//
@@ -187,50 +191,50 @@ abstract class BaseScript extends Script {
 
     //CounterKey
     UpdateOp incrementCounter(CounterKey counterKey, int incrementValue) {
-        return currentAntidote.getCounterService().incrementCounter(counterKey, incrementValue);
+        return currentAntidote.getCounterService().incrementCounter(counterKey, incrementValue)
     }
 
     CounterKey getCounterKey(String counterKey){
-        return currentAntidote.getCounterService().getKey(counterKey);
+        return currentAntidote.getCounterService().getKey(counterKey)
     }
 
     //FatCounterKey
     UpdateOp incrementFatCounter(CounterKey fatCounterKey, int incrementValue) {
-        return currentAntidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue);
+        return currentAntidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue)
     }
 
     UpdateOp resetFatCounter(CounterKey fatCounterKey) {
-        return currentAntidote.getFatCounterService().resetFatCounter(fatCounterKey);
+        return currentAntidote.getFatCounterService().resetFatCounter(fatCounterKey)
     }
 
     CounterKey getFatCounterKey(String fatCounterKey) {
-        return currentAntidote.getFatCounterService().getKey(fatCounterKey);
+        return currentAntidote.getFatCounterService().getKey(fatCounterKey)
     }
 
     //Map_AW Key
     UpdateOp updateAWMap(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getAWMapService().updateMap(mapKey, update);
+        return currentAntidote.getAWMapService().updateMap(mapKey, update)
     }
 
     UpdateOp removeFromAWMap(MapKey mapKey, Key... key) {
-        return currentAntidote.getAWMapService().removeKey(mapKey, key);
+        return currentAntidote.getAWMapService().removeKey(mapKey, key)
     }
 
     MapKey getAWMapKey(String mapKey) {
-        return currentAntidote.getAWMapService().getKey(mapKey);
+        return currentAntidote.getAWMapService().getKey(mapKey)
     }
 
     //Map_RR Key
     UpdateOp updateRRMap(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getRRMapService().updateMap(mapKey, update);
+        return currentAntidote.getRRMapService().updateMap(mapKey, update)
     }
 
     UpdateOp removeFromRRMap(MapKey mapKey, Key... key) {
-        return currentAntidote.getRRMapService().removeKey(mapKey, key);
+        return currentAntidote.getRRMapService().removeKey(mapKey, key)
     }
 
     UpdateOp resetRRMap(MapKey mapKey) {
-        return currentAntidote.getRRMapService().reset(mapKey);
+        return currentAntidote.getRRMapService().reset(mapKey)
     }
 
     MapKey getRRMapKey(String mapKey) {

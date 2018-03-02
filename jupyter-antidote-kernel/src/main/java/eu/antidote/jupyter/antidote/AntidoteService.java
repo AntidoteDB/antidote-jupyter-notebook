@@ -69,6 +69,10 @@ public class AntidoteService {
         return mapReadResult.get(elementKey);
     }
 
+    public Object readKeyInMapResult(MapKey.MapReadResult mapResult, Key elementKey){
+        return mapResult.get(elementKey);
+    }
+
     public RegisterService getRegisterService(){
         if(registerService == null){
             registerService = new RegisterService();
