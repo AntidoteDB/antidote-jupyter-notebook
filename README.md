@@ -6,11 +6,6 @@ The [Jupyter](https://jupyter.org) Antidote kernel is a Jupyter kernel based on 
 
 This notebook is based on [Antidote Java API](https://www.javadoc.io/doc/eu.antidotedb/antidote-java-client/0.1.0), but it is tailored for tutorial purpose. As a result, not all Antidote functionalities are realized in the notebook. 
 
-## Table of contents
-1. [Installation](#installation)
-1. [Docker](#docker)
-1. [Docker Compose](#docker-compose)
-
 ## Installation
 
 ### From Source
