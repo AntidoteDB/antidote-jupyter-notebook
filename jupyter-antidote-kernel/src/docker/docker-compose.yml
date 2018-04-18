@@ -3,8 +3,6 @@ services:
   antidote1:
      image: antidotedb/antidote:latest
      container_name: antidote1
-     ports:
-       - "8087:8087"
      environment:
        NODE_NAME: "antidote@antidote1"
        SHORT_NAME: "true"
@@ -17,8 +15,6 @@ services:
   antidote2:
     image: antidotedb/antidote:latest
     container_name: antidote2
-    ports:
-      - "8088:8087"
     environment:
       NODE_NAME: "antidote@antidote2"
       SHORT_NAME: "true"
@@ -32,22 +28,11 @@ services:
     image: antidotedb/notebook:latest
     container_name: antidote_notebook
     ports:
-      - "8089:8888"
+      - "8888:8888"
     cap_add:
       - NET_ADMIN
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    networks:
-      - local1
-      - local2
-
-  link:
-    image: erlang:19
-    volumes:
-      - .:/code
-    command: '/code/link.sh'
-    cap_add:
-      - NET_ADMIN
     networks:
       - local1
       - local2

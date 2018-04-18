@@ -1,6 +1,5 @@
 VERSION=$(shell cat VERSION)
-NAME=jupyter-antidote-kernel
-IMAGE=antidote/$(NAME)
+IMAGE=antidotedb/notebook
 
 all: jar docker
 
@@ -8,18 +7,17 @@ jar:
 	mvn package
 
 docker:
-	cp target/$(NAME)-$(VERSION).jar src/docker/
-	docker build -t $(IMAGE) src/docker
+	docker build -t $(IMAGE) src/docker/antidotenb
+
+runnotebook:
+	cd src/docker && docker-compose up
 
 push:
-	cd src/docker && docker push $(IMAGE)
+	cd src/docker/antidotenb && docker push $(IMAGE)
 
-dist:
-	cd src/distribution && ./create.sh
-	
 clean:
 	mvn clean
-	if [ -e src/docker/*.jar ] ; then rm src/docker/*.jar ; fi
+	if [ -e src/docker/antidotenb/*.jar ] ; then rm src/docker/antidotenb/*.jar ; fi
 
 
 
