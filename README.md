@@ -4,7 +4,7 @@
 
 The [Jupyter](https://jupyter.org) Antidote kernel is a Jupyter kernel based on the [Jupyter Groovy Kernel](https://github.com/lappsgrid-incubator/jupyter-groovy-kernel) that connects to Antidote services. It allows users to interact with Antidote databases and observe how Antidote resolves inconsistencies in case of network failure.
 
-This notebook is based on [Antidote Java API](https://www.javadoc.io/doc/eu.antidotedb/antidote-java-client/0.1.0), but it is tailored for tutorial purpose. As a result, not all Antidote functionalities are realized in the notebook. 
+This notebook is based on [Antidote Java API](https://www.javadoc.io/doc/eu.antidotedb/antidote-java-client/0.1.0), but it is tailored for tutorial purpose. As a result, not all Antidote functionalities are realized in the notebook.
 
 ## Installation
 
