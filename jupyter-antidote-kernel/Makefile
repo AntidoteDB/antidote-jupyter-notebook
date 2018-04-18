@@ -6,7 +6,7 @@ all: jar docker
 jar:
 	mvn package
 
-docker:
+docker: jar
 	docker build -t $(IMAGE) src/docker/antidotenb
 
 runnotebook:
