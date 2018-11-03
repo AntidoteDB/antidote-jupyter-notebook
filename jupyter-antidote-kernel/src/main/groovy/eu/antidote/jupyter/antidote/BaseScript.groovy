@@ -179,19 +179,6 @@ abstract class BaseScript extends Script {
         currentAntidote.getRwSetService().resetRWSet(setKey);
     }
 
-    //IntegerKey
-    UpdateOp assignInteger(IntegerKey integerKey, int value){
-        return currentAntidote.getIntegerService().assignInteger(integerKey, value)
-    }
-
-    UpdateOp incrementInteger(IntegerKey integerKey, int incrementValue){
-        return currentAntidote.getIntegerService().incrementInteger(integerKey, incrementValue)
-    }
-
-    IntegerKey getIntegerKey(String integerKey){
-        return currentAntidote.getIntegerService().getKey(integerKey)
-    }
-
     //CounterKey
     UpdateOp incrementCounter(CounterKey counterKey, int incrementValue) {
         return currentAntidote.getCounterService().incrementCounter(counterKey, incrementValue)
@@ -212,19 +199,6 @@ abstract class BaseScript extends Script {
 
     CounterKey getFatCounterKey(String fatCounterKey) {
         return currentAntidote.getFatCounterService().getKey(fatCounterKey)
-    }
-
-    //Map_AW Key
-    UpdateOp updateAWMap(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getAWMapService().updateMap(mapKey, update)
-    }
-
-    UpdateOp removeFromAWMap(MapKey mapKey, Key... key) {
-        return currentAntidote.getAWMapService().removeKey(mapKey, key)
-    }
-
-    MapKey getAWMapKey(String mapKey) {
-        return currentAntidote.getAWMapService().getKey(mapKey)
     }
 
     //Map_RR Key

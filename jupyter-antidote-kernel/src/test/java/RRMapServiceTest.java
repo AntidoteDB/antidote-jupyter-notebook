@@ -7,14 +7,12 @@ import static org.junit.Assert.assertTrue;
 
 public class RRMapServiceTest extends AbstractAntidoteTest {
     private RRMapService map_service;
-    private IntegerService int_service;
     private CounterService counter_service;
     private SetService set_service;
 
     public RRMapServiceTest() {
         super();
         map_service = new RRMapService();
-        int_service = new IntegerService();
         counter_service = new CounterService();
         set_service = new SetService();
     }
@@ -23,16 +21,11 @@ public class RRMapServiceTest extends AbstractAntidoteTest {
     public void testUpdatesMapRR() {
 
         MapKey mapKey = map_service.getKey("map_rr_test_updates_map_key");
-        IntegerKey y_key = int_service.getKey("map_rr_test_updates_y_key");
         CounterKey z_key = counter_service.getKey("map_rr_test_updates_z_key");
 
-        UpdateOp update = map_service.updateMap(mapKey, int_service.assignInteger(y_key, 1),
-                                                        counter_service.incrementCounter(z_key,3));
+        UpdateOp update = map_service.updateMap(mapKey, counter_service.incrementCounter(z_key,3));
 
         antidoteService.applyUpdate(update);
-
-        long readValue_y = (Long) antidoteService.readKeyInMap(mapKey, y_key);
-        assertEquals(1, readValue_y);
 
         int readValue_z = (Integer) antidoteService.readKeyInMap(mapKey, z_key);
         assertEquals(3, readValue_z);

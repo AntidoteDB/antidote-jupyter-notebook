@@ -15,13 +15,11 @@ public class AntidoteService {
     final int nodeId;
     private Bucket bucket;
     private RegisterService registerService;
-    private IntegerService integerService;
     private MultiValueRegisterService mvRegisterService;
     private SetService setService;
     private RWSetService rwSetService;
     private CounterService counterService;
     private FatCounterService fatCounterService;
-    private AWMapService AWMapService;
     private RRMapService RRMapService;
     private GMapService GMapService;
     public Kanban kanban;
@@ -82,13 +80,6 @@ public class AntidoteService {
         return registerService;
     }
 
-    public IntegerService getIntegerService() {
-         if(integerService == null) {
-             integerService = new IntegerService();
-         }
-         return integerService;
-    }
-
     public CounterService getCounterService() {
         if(counterService == null) {
             counterService = new CounterService();
@@ -122,13 +113,6 @@ public class AntidoteService {
             rwSetService = new RWSetService();
         }
         return rwSetService;
-    }
-
-    public AWMapService getAWMapService() {
-        if(AWMapService == null){
-            AWMapService = new AWMapService();
-        }
-        return AWMapService;
     }
 
     public RRMapService getRRMapService() {

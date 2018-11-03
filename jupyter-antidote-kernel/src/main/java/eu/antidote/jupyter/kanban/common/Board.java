@@ -1,6 +1,6 @@
 package eu.antidote.jupyter.kanban.common;
 
-import static eu.antidotedb.client.Key.map_aw;
+import static eu.antidotedb.client.Key.map_rr;
 import static eu.antidotedb.client.Key.register;
 import static eu.antidotedb.client.Key.set;
 
@@ -22,7 +22,7 @@ public class Board {
 	public static List<BoardId> list_boards = new ArrayList<BoardId>();
 
 	public static MapKey boardMap(BoardId board_id) {
-		return map_aw(board_id.getId());
+		return map_rr(board_id.getId());
 	}
 
 	public BoardId createBoard(AntidoteClient client, String name) {

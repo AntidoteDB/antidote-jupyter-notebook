@@ -182,9 +182,16 @@
 
         <!-- https://mvnrepository.com/artifact/eu.antidotedb/antidote-java-client -->
         <dependency>
-            <groupId>eu.antidotedb</groupId>
+            <groupId>com.github.AntidoteDB</groupId>
             <artifactId>antidote-java-client</artifactId>
-            <version>0.1.0</version>
+            <version>0.3.0</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>

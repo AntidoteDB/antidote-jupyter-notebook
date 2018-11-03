@@ -22,7 +22,7 @@ public class User {
 	}
 
 	public MapKey userMap(UserId user_id) {
-		return map_aw(user_id.getId());
+		return map_rr(user_id.getId());
 	}
 
 	public UserId createUser(AntidoteClient client, String email) {
