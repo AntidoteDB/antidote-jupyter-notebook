@@ -19,7 +19,6 @@ package eu.antidote.jupyter.antidote
 
 import eu.antidote.jupyter.kanban.common.BoardId
 import eu.antidotedb.client.*
-import eu.antidote.jupyter.kanban.*
 
 
 import java.text.DateFormat

@@ -24,7 +24,7 @@ public class AntidoteService {
     private GMapService GMapService;
     public Kanban kanban;
 
-    public AntidoteService(int node, String buckerKey) {
+    public AntidoteService(int node, String bucketKey) {
         nodeId = node;
         List<TransformerFactory> transformers = new ArrayList();
         transformers.add(new CountingTransformer());
@@ -36,7 +36,7 @@ public class AntidoteService {
         }else {
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidoteLocalConfigHosts());
         }
-        this.bucket = Bucket.bucket(buckerKey);
+        this.bucket = Bucket.bucket(bucketKey);
         this.kanban = new Kanban(this.antidoteClient);
     }
 

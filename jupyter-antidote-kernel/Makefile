@@ -4,7 +4,7 @@ IMAGE=antidotedb/notebook
 all: jar docker
 
 jar:
-	mvn package
+	mvn package -DskipTests
 
 docker: jar
 	docker build -t $(IMAGE) src/docker/antidotenb
