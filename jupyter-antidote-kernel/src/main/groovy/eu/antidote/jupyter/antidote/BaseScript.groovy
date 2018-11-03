@@ -17,7 +17,10 @@
 
 package eu.antidote.jupyter.antidote
 
+import eu.antidote.jupyter.kanban.common.BoardId
 import eu.antidotedb.client.*
+import eu.antidote.jupyter.kanban.*
+
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -238,16 +241,16 @@ abstract class BaseScript extends Script {
     }
 
     MapKey getRRMapKey(String mapKey) {
-        return currentAntidote.getRRMapService().getKey(mapKey);
+        return currentAntidote.getRRMapService().getKey(mapKey)
     }
 
     //Map_G Key
     UpdateOp updateGMap(MapKey mapKey, UpdateOp... update) {
-        return currentAntidote.getGMapService().updateMap(mapKey, update);
+        return currentAntidote.getGMapService().updateMap(mapKey, update)
     }
 
     MapKey getGMapKey(String mapKey) {
-        return currentAntidote.getGMapService().getKey(mapKey);
+        return currentAntidote.getGMapService().getKey(mapKey)
     }
 
     String version() {
@@ -271,4 +274,20 @@ abstract class BaseScript extends Script {
         return dateFormat.format(date)
     }
 
+    //Kanban board commands
+
+    String hello() {
+        return currentAntidote.kanban.hello()
+    }
+
+    List<BoardId> listboards() {
+        return currentAntidote.kanban.listboards()
+    }
+
+    BoardId createboard(String boardKey) {
+        return currentAntidote.kanban.createboard()
+    }
+
+
 }
+

@@ -26,7 +26,7 @@ import org.lappsgrid.jupyter.groovy.GroovyKernel
  */
 @Slf4j('logger')
 class AntidoteKernel extends GroovyKernel {
-    public static String ANTIDOTE_IP = "192.168.99.100"
+    public static String ANTIDOTE_IP = "192.168.99.100" //"127.0.0.1"  //"192.168.99.100"
     public static String ANTIDOTE1_IP = "antidote1"
     public static String ANTIDOTE2_IP = "antidote2"
     public static int ANTIDOTE_PORT = 8087

@@ -1,6 +1,7 @@
 package eu.antidote.jupyter.antidote;
 
 import eu.antidote.jupyter.antidote.crdt.*;
+import eu.antidote.jupyter.kanban.Kanban;
 import eu.antidotedb.client.*;
 import eu.antidotedb.client.transformer.CountingTransformer;
 import eu.antidotedb.client.transformer.TransformerFactory;
@@ -23,6 +24,7 @@ public class AntidoteService {
     private AWMapService AWMapService;
     private RRMapService RRMapService;
     private GMapService GMapService;
+    public Kanban kanban;
 
     public AntidoteService(int node, String buckerKey) {
         nodeId = node;
@@ -37,7 +39,7 @@ public class AntidoteService {
             this.antidoteClient = new AntidoteClient(transformers, antidoteJupyterConfigManager.getAntidoteLocalConfigHosts());
         }
         this.bucket = Bucket.bucket(buckerKey);
-
+        this.kanban = new Kanban(this.antidoteClient);
     }
 
     public InteractiveTransaction startTransaction(){
