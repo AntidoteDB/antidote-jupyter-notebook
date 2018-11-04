@@ -1,1 +1,3 @@
 *.jar
+.ipynb_checkpoints/*
+jupyter-groovy-kernel.log

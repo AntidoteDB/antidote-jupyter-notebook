@@ -33,6 +33,7 @@ services:
       - NET_ADMIN
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./antidotenb/:/home/jovyan/antidotenb"
     networks:
       - local1
       - local2

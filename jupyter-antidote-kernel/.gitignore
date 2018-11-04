@@ -5,3 +5,4 @@
 target
 src/**/Version.java
 src/docker/*.jar
+bin/*
