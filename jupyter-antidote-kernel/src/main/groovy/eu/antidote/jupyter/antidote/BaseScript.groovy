@@ -17,7 +17,7 @@
 
 package eu.antidote.jupyter.antidote
 
-import eu.antidote.jupyter.kanban.common.BoardId
+import eu.antidote.jupyter.kanban.common.*
 import eu.antidotedb.client.*
 
 
@@ -121,13 +121,13 @@ abstract class BaseScript extends Script {
         return currentAntidote.readKeyInMapResult(mapResult, elementKey)
     }
 
-    //-----------------LWREGISTER METHODS----------------------------//
+    //-----------------LWWREGISTER METHODS----------------------------//
 
-    RegisterKey<String> getLWRegisterKey(String keyid){
+    RegisterKey<String> getLWWRegisterKey(String keyid){
         return currentAntidote.getRegisterService().getKey(keyid)
     }
 
-    UpdateOp assignLWRegister(RegisterKey<String> registerKey, String value){
+    UpdateOp assignLWWRegister(RegisterKey<String> registerKey, String value){
         return currentAntidote.getRegisterService().assignRegister(registerKey, value)
     }
 
@@ -185,19 +185,6 @@ abstract class BaseScript extends Script {
 
     CounterKey getCounterKey(String counterKey){
         return currentAntidote.getCounterService().getKey(counterKey)
-    }
-
-    //FatCounterKey
-    UpdateOp incrementFatCounter(CounterKey fatCounterKey, int incrementValue) {
-        return currentAntidote.getFatCounterService().incrementFatCounter(fatCounterKey, incrementValue)
-    }
-
-    UpdateOp resetFatCounter(CounterKey fatCounterKey) {
-        return currentAntidote.getFatCounterService().resetFatCounter(fatCounterKey)
-    }
-
-    CounterKey getFatCounterKey(String fatCounterKey) {
-        return currentAntidote.getFatCounterService().getKey(fatCounterKey)
     }
 
     //Map_RR Key
@@ -259,6 +246,39 @@ abstract class BaseScript extends Script {
 
     BoardId createboard(String boardKey) {
         return currentAntidote.kanban.createboard()
+    }
+
+    String renameboard(BoardId bid, String name) {
+        currentAntidote.kanban.renameboard(bid, name)
+        return "Renamed board"
+    }
+
+    BoardMap getboard(BoardId bid) {
+        return currentAntidote.kanban.getboard(bid)
+    }
+
+
+    ColumnId addcolumn(BoardId bid, String columnname) {
+        return currentAntidote.kanban.addcolumn(bid, columnname)
+    }
+
+    String deletecolumn(ColumnId cid) {
+        currentAntidote.kanban.deletecolumn(cid)
+        return "Deleted column"
+    }
+
+    TaskId createtask(ColumnId cid, String taskname) {
+        return currentAntidote.kanban.createtask(taskname, cid)
+    }
+
+    String deletetask(TaskId tid) {
+        currentAntidote.kanban.deletetask(tid)
+        return "Deleted task"
+    }
+
+    String movetask(TaskId tid, ColumnId cid) {
+        currentAntidote.kanban.movetask(tid, cid)
+        return "Moved task"
     }
 
 
