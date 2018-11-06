@@ -7,7 +7,7 @@ import com.google.protobuf.ByteString;
 import eu.antidotedb.client.ValueCoder;
 
 public class TaskId {
-	
+	static int i;
 	private String id;
 	
 	public TaskId(String uniqueID) {
@@ -15,7 +15,7 @@ public class TaskId {
 	}
 	
 	public static TaskId generateId() {
-		String uniqueID = UUID.randomUUID().toString();
+		String uniqueID = "TASK_" + i++;//UUID.randomUUID().toString();
 		return new TaskId(uniqueID);
 	}
 	
@@ -26,6 +26,17 @@ public class TaskId {
 	public String toString() {
 		return id;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof TaskId) {
+			TaskId c = (TaskId) o;
+			if (this.id.equals(c.id)) return true;
+		}
+		return false;
+	}
+
 
 	static class Coder implements ValueCoder<TaskId> {
 

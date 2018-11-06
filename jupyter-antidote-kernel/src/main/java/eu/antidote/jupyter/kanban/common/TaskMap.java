@@ -2,9 +2,9 @@ package eu.antidote.jupyter.kanban.common;
 
 public class TaskMap {
 
-	private String task_title;
-	private ColumnId column_id;
-	private String due_date;
+	public String task_title;
+	public ColumnId column_id;
+	public String due_date;
 	
 	public TaskMap(String tasktitle, ColumnId columnid, String duedate) {
 		column_id = columnid;

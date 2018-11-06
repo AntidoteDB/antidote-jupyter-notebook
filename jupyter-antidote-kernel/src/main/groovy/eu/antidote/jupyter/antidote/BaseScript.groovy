@@ -50,7 +50,7 @@ abstract class BaseScript extends Script {
         return formattedTimestamp()+ " Antidote session created. Connected to Antidote node 1."
     }
 
-    String switchAntidote(int node){
+    String onReplica(int node){
         String session=""
         if(node == 1){
             if(antidote1 == null){
@@ -72,18 +72,18 @@ abstract class BaseScript extends Script {
      * Execute the docker command to emulate network connection between antidote notes
      * executed in Antidote1
      */
-    String connectAntidotes(){
+    String connect(){
         Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 0%")
-        return formattedTimestamp()+ " Connecting Antidote nodes."
+        return formattedTimestamp()+ " Connecting replicas."
     }
 
     /**
      * Execute the docker command to emulate network disconnection between antidote notes
      * executed in Antidote1
      */
-    String disconnectAntidotes(){
+    String disconnect(){
         Runtime.getRuntime().exec("docker exec antidote2 tc qdisc replace dev eth0 root netem loss 100%")
-        return formattedTimestamp()+ " Disconnecting Antidote nodes."
+        return formattedTimestamp()+ " Disconnecting replicas."
     }
 
     AntidoteTransaction startTransaction(){

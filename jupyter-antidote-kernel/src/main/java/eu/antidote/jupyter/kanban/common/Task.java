@@ -73,7 +73,7 @@ public class Task {
 		cbucket.update(tx, oldcolumnKey.update(Column.taskidfield.remove(task_id)));
 		MapKey newcolumnKey = Column.columnMap(newcolumn_id);
 		cbucket.update(tx, newcolumnKey.update(Column.taskidfield.add(task_id)));
-		cbucket.update(client.noTransaction(), taskKey.update(columnidfield.assign(newcolumn_id)));
+		cbucket.update(tx, taskKey.update(columnidfield.assign(newcolumn_id)));
 		tx.commitTransaction();
 		
 	}

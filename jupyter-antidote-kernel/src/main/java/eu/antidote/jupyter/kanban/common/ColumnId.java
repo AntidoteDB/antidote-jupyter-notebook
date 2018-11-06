@@ -6,7 +6,7 @@ import com.google.protobuf.ByteString;
 import eu.antidotedb.client.ValueCoder;
 
 public class ColumnId {
-	
+	static int i;
 	private String id;
 		
 	public ColumnId(String uniqueID) {
@@ -14,7 +14,7 @@ public class ColumnId {
 	}
 
 	public static ColumnId generateId() {
-		String uniqueID = UUID.randomUUID().toString();
+		String uniqueID = "COLUMN_" + i++;//UUID.randomUUID().toString();
 		return new ColumnId(uniqueID);
 	}
 	
@@ -26,7 +26,17 @@ public class ColumnId {
 		return id;
 	}
 
-	static class Coder implements ValueCoder<ColumnId> {
+    @Override
+    public boolean equals(Object o) {
+
+        if (o instanceof ColumnId) {
+            ColumnId c = (ColumnId) o;
+            if (this.id.equals(c.id)) return true;
+        }
+        return false;
+    }
+
+    static class Coder implements ValueCoder<ColumnId> {
 
 		public ColumnId decode(ByteString b) {
 			return new ColumnId(b.toStringUtf8());

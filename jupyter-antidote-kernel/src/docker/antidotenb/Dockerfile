@@ -16,7 +16,6 @@ RUN chmod a+x /entrypoint.sh && chmod a+x /link.sh
 RUN jupyter kernelspec install --name Antidote /jupyter/antidote
 
 COPY ./images ./images
-COPY ["./Welcome to Antidote.ipynb", "./Welcome to Antidote.ipynb"]
 
 #VOLUME ["/home/jovyan/work"]
 #WORKDIR /home/jovyan/work
