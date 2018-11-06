@@ -3,11 +3,12 @@ package eu.antidote.jupyter.antidote.crdt;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
+import eu.antidotedb.client.ValueCoder;
 
 
-public class SetService {
+public class SetService<T> {
 
-    public UpdateOp addToSet(SetKey<String> setKey, String... values) {
+    public UpdateOp addToSet(SetKey<T> setKey, T... values) {
         UpdateOp updateOp;
         if(values.length>1) {
             updateOp = setKey.addAll(values);
@@ -17,11 +18,16 @@ public class SetService {
         return updateOp;
     }
 
+    public SetKey<T> getKey(String keyId, ValueCoder<T> format){
+        return Key.set(keyId, format);
+    }
+
     public SetKey<String> getKey(String keyId){
         return Key.set(keyId);
     }
 
-    public UpdateOp removeFromSet(SetKey<String> setKey, String... values){
+
+    public UpdateOp removeFromSet(SetKey<T> setKey, T... values){
         UpdateOp setUpdate;
         if(values.length>1) {
             setUpdate = setKey.removeAll(values);
@@ -31,7 +37,7 @@ public class SetService {
         return setUpdate;
     }
 
-    public UpdateOp resetSet(SetKey<String> setKey){
+    public UpdateOp resetSet(SetKey<T> setKey){
         return setKey.reset();
     }
 

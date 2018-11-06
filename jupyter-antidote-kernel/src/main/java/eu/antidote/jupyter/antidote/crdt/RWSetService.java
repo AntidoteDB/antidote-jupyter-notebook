@@ -3,10 +3,11 @@ package eu.antidote.jupyter.antidote.crdt;
 import eu.antidotedb.client.Key;
 import eu.antidotedb.client.SetKey;
 import eu.antidotedb.client.UpdateOp;
+import eu.antidotedb.client.ValueCoder;
 
-public class RWSetService {
+public class RWSetService<T> {
 
-    public UpdateOp addToRWSet(SetKey<String> setKey, String... values) {
+    public UpdateOp addToRWSet(SetKey<T> setKey, T... values) {
         UpdateOp op;
         if(values.length>1) {
             op = setKey.addAll(values);
@@ -16,11 +17,16 @@ public class RWSetService {
         return op;
     }
 
-    public SetKey<String> getKey(String keyId){
-         return Key.set_removeWins(keyId);
+    public SetKey<T> getKey(String keyId, ValueCoder<T> format){
+         return Key.set_removeWins(keyId, format);
     }
 
-    public UpdateOp removeFromRWSet(SetKey<String> setKey, String... values){
+
+    public SetKey<String> getKey(String keyId){
+        return Key.set_removeWins(keyId);
+    }
+
+    public UpdateOp removeFromRWSet(SetKey<T> setKey, T... values){
         UpdateOp op;
         if(values.length>1) {
             op = setKey.removeAll(values);
@@ -30,7 +36,7 @@ public class RWSetService {
         return op;
     }
 
-    public UpdateOp resetRWSet(SetKey<String> setKey){
+    public UpdateOp resetRWSet(SetKey<T> setKey){
         return setKey.reset();
     }
 }

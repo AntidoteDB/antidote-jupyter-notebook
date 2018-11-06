@@ -47,7 +47,7 @@ abstract class BaseScript extends Script {
             antidote1 = new AntidoteService(1, sessionId)
         }
         currentAntidote = antidote1
-        return formattedTimestamp()+ " Antidote session created. Connected to Antidote node 1."
+        return formattedTimestamp()+ "Setup created. Connected to Replica 1."
     }
 
     String onReplica(int node){
@@ -55,17 +55,17 @@ abstract class BaseScript extends Script {
         if(node == 1){
             if(antidote1 == null){
                 antidote1 = new AntidoteService(1, sessionId)
-                session = " Antidote 1 session created. "
+                session = " Replica 1 session created. "
             }
             currentAntidote = antidote1
         }else if(node == 2){
             if(antidote2 == null){
                 antidote2 = new AntidoteService(2, sessionId)
-                session = " Antidote 2 session created. "
+                session = " Replica 2 session created. "
             }
             currentAntidote = antidote2
         }
-        return formattedTimestamp()+ session + " Connected to Antidote " + node +"."
+        return formattedTimestamp()+ session + " Connected to Replica " + node +"."
     }
 
     /**
@@ -244,8 +244,8 @@ abstract class BaseScript extends Script {
         return currentAntidote.kanban.listboards()
     }
 
-    BoardId createboard(String boardKey) {
-        return currentAntidote.kanban.createboard()
+    BoardId createboard(String boardname) {
+        return currentAntidote.kanban.createboard(boardname)
     }
 
     String renameboard(BoardId bid, String name) {
@@ -267,7 +267,7 @@ abstract class BaseScript extends Script {
         return "Deleted column"
     }
 
-    TaskId createtask(ColumnId cid, String taskname) {
+    TaskId createtask(String taskname, ColumnId cid) {
         return currentAntidote.kanban.createtask(taskname, cid)
     }
 
