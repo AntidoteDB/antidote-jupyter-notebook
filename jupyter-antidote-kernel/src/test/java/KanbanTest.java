@@ -57,6 +57,35 @@ public class KanbanTest extends AbstractAntidoteTest {
     }
 
     @Test
+    public void lwwTest() {
+        BoardId bid = antidoteService.kanban_lww.createboard("y");
+        BoardId bid2 = antidoteService.kanban_lww.createboard("x");
+        System.out.println(antidoteService.kanban_lww.getboard(bid));
+        System.out.println(antidoteService.kanban_lww.getboard(bid2));
+        System.out.println(antidoteService.kanban_lww.listboards());
+
+
+        String cname = "c";
+        ColumnId cid = antidoteService.kanban_lww.addcolumn(bid, cname);
+        System.out.println(antidoteService.kanban_lww.getcolumn(cid).tasks);
+
+        //System.out.println(antidoteService.kanban_lww.getboard(bid));
+        //System.out.println(antidoteService.kanban_lww.getboard(bid2));
+
+        String tname = "t";
+        antidoteService.kanban_lww.createtask(tname, cid);
+        String tname2 = "t2";
+        antidoteService.kanban_lww.createtask(tname2, cid);
+        System.out.println("tasks" + antidoteService.kanban_lww.getcolumn(cid).tasks);
+
+        assert(antidoteService.kanban_lww.getcolumn(cid).tasks.contains(tname));
+        assert(antidoteService.kanban_lww.getcolumn(cid).tasks.contains(tname2));
+        System.out.println(antidoteService.kanban_lww.getcolumn(cid).tasks);
+    }
+
+
+
+    @Test
     public void deletetaskTest() {
         BoardId bid = antidoteService.kanban.createboard("b");
         String cname = "c";

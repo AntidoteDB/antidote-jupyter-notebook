@@ -281,6 +281,34 @@ abstract class BaseScript extends Script {
         return "Moved task"
     }
 
+    // Kanban board with LWW Register for tasks
+
+    BoardId createboard_x(String boardname) {
+        return currentAntidote.kanban_lww.createboard(boardname)
+    }
+
+//    String renameboard_x(BoardId bid, String name) {
+//        currentAntidote.kanban_lww.renameboard(bid, name)
+//        return "Renamed board"
+//    }
+
+    BoardMap getboard_x(BoardId bid) {
+        return currentAntidote.kanban_lww.getboard(bid)
+    }
+
+
+    ColumnId addcolumn_x(BoardId bid, String columnname) {
+        return currentAntidote.kanban_lww.addcolumn(bid, columnname)
+    }
+
+    String deletecolumn_x(ColumnId cid) {
+        currentAntidote.kanban_lww.deletecolumn(cid)
+        return "Deleted column"
+    }
+
+    TaskId createtask_x(String taskname, ColumnId cid) {
+        return currentAntidote.kanban_lww.createtask(taskname, cid)
+    }
 
 }
 

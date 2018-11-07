@@ -18,7 +18,7 @@ public class Board {
 	private static final RegisterKey<String> namefield = register("Name");
 	public static final SetKey<ColumnId> columnidfield = set("ColumnId", new ColumnId.Coder());
 
-	Bucket cbucket = Bucket.bucket("bucket");
+	static Bucket cbucket = Bucket.bucket("bucket");
 	public static List<BoardId> list_boards = new ArrayList<BoardId>();
 
 	public static MapKey boardMap(BoardId board_id) {
@@ -29,7 +29,8 @@ public class Board {
 		BoardId board_id = BoardId.generateId();
 		MapKey boardKey = boardMap(board_id);
 		cbucket.update(client.noTransaction(), boardKey.update(namefield.assign(name)));
-		list_boards.add(board_id);
+        cbucket.update(client.noTransaction(), boardKey.update(columnidfield.reset()));
+        list_boards.add(board_id);
 		return board_id;
 	}
 
@@ -43,16 +44,34 @@ public class Board {
 	}
 
 	public BoardMap getBoard(AntidoteClient client, BoardId board_id) {
-		List<ColumnMap> column_list = new ArrayList<ColumnMap>();
-		MapKey boardKey = boardMap(board_id);
-		MapReadResult boardmap = cbucket.read(client.noTransaction(), boardKey);
-		String boardname = boardmap.get(namefield);
+        MapKey boardKey = boardMap(board_id);
+        MapReadResult boardmap = cbucket.read(client.noTransaction(), boardKey);
+
+        String boardname = boardmap.get(namefield);
+
+        List<ColumnMap> column_list = new ArrayList<ColumnMap>();
 		List<ColumnId> columnid_list = boardmap.get(columnidfield);
-		for(int i = 0; i < columnid_list.size(); i++) {
-			ColumnMap column = new Column().getColumn(client, columnid_list.get(i));
+
+		for(ColumnId cid : columnid_list) {
+			ColumnMap column = new Column().getColumn(client, cid);
 			column_list.add(column);
 		}
 		return new BoardMap(boardname, columnid_list, column_list);
 	}
 
+
+    public BoardMap getBoard_x(AntidoteClient client, BoardId board_id) {
+        MapKey boardKey = boardMap(board_id);
+        MapReadResult boardmap = cbucket.read(client.noTransaction(), boardKey);
+
+        String boardname = boardmap.get(namefield);
+
+        List<ColumnMap_lww> column_list = new ArrayList<ColumnMap_lww>();
+        List<ColumnId> columnid_list = boardmap.get(columnidfield);
+        for(ColumnId cid : columnid_list) {
+            ColumnMap_lww column = new Column_lww(cid).getColumn(client, cid);
+            column_list.add(column);
+        }
+        return new BoardMap(boardname, columnid_list, column_list, true);
+    }
 }

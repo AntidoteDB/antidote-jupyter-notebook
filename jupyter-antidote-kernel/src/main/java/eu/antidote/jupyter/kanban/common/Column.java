@@ -21,7 +21,7 @@ public class Column {
 		private static final RegisterKey<BoardId> boardidfield = register("BoardId", new BoardId.Coder());
 		public static final SetKey<TaskId> taskidfield = set("TaskId", new TaskId.Coder());
 
-		Bucket cbucket = Bucket.bucket("bucket");
+		static Bucket cbucket = Bucket.bucket("bucket");
 
 		public ColumnId column_id = null;
 		public Column(ColumnId column_id) {
@@ -35,7 +35,7 @@ public class Column {
 			return map_rr(column_id.getId());
 		}
 
-		public ColumnId addColumn(AntidoteClient client, BoardId board_id, String name) {
+		public static ColumnId addColumn(AntidoteClient client, BoardId board_id, String name) {
 			MapKey boardKey = Board.boardMap(board_id);
 			ColumnId column_id = ColumnId.generateId();
 			MapKey columnKey = columnMap(column_id);
