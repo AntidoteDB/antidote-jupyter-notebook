@@ -52,7 +52,7 @@ public class KanbanTest extends AbstractAntidoteTest {
         String cname = "c";
         ColumnId cid = antidoteService.kanban.addcolumn(bid, cname);
         String tname = "t";
-        TaskId tid = antidoteService.kanban.createtask(cid, tname);
+        TaskId tid = antidoteService.kanban.createtask(tname, cid);
         assert(antidoteService.kanban.getcolumn(cid).taskids.contains(tid));
     }
 
@@ -62,7 +62,7 @@ public class KanbanTest extends AbstractAntidoteTest {
         String cname = "c";
         ColumnId cid = antidoteService.kanban.addcolumn(bid, cname);
         String tname = "t";
-        TaskId tid = antidoteService.kanban.createtask(cid, tname);
+        TaskId tid = antidoteService.kanban.createtask(tname, cid);
         antidoteService.kanban.deletetask(tid);
         assert(!antidoteService.kanban.getcolumn(cid).taskids.contains(tid));
     }
@@ -78,7 +78,7 @@ public class KanbanTest extends AbstractAntidoteTest {
         ColumnId cid2 = antidoteService.kanban.addcolumn(bid, cname2);
 
         String tname = "t";
-        TaskId tid = antidoteService.kanban.createtask(cid, tname);
+        TaskId tid = antidoteService.kanban.createtask(tname, cid);
         System.out.println(antidoteService.kanban.getcolumn(cid).taskids);
         System.out.println(antidoteService.kanban.getcolumn(cid2).taskids);
 

@@ -62,7 +62,7 @@ public class Kanban {
 	}
 
 	 
-	public TaskId createtask(ColumnId column_id, String title) {
+	public TaskId createtask(String title, ColumnId column_id) {
 		return task.createTask(currentSession, column_id, title);
 	}
 	
