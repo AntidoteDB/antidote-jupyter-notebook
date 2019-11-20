@@ -10,7 +10,7 @@ This notebook is based on [Antidote Java API](https://www.javadoc.io/doc/eu.anti
 
 ### From Source
 
-Building the Antidote-kernel Jupyter Notebook project requires Maven 3.x or higher.
+Building the Antidote-kernel Jupyter Notebook project requires Maven 3.x or higher and Java 8.
 
 ```bash
 $> cd jupyter-antidote-kernel

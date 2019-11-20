@@ -5,7 +5,7 @@ services:
      container_name: antidote1
      environment:
        NODE_NAME: "antidote@antidote1"
-       SHORT_NAME: "true"
+       COOKIE: "antidote"
      cap_add:
        - NET_ADMIN
      networks:
@@ -17,7 +17,7 @@ services:
     container_name: antidote2
     environment:
       NODE_NAME: "antidote@antidote2"
-      SHORT_NAME: "true"
+      COOKIE: "antidote"
     cap_add:
       - NET_ADMIN
     networks:
